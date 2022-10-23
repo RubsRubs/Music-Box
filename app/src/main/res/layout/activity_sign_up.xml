@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".SignUpActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="250dp"
+        android:src="@drawable/music_box_logo" />
+
+    <EditText
+        android:id="@+id/editEmailID"
+        android:layout_width="370dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/white"
+        android:hint="email"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/white"
+        android:textColorHint="@color/bottom_navigation_icon_colors">
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/editUserID"
+        android:layout_width="370dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/white"
+        android:hint="usuario"
+        android:inputType="text"
+        android:textColor="@color/white"
+        android:textColorHint="@color/bottom_navigation_icon_colors">
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/editPassw1ID"
+        android:layout_width="370dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/white"
+        android:hint="contraseña"
+        android:inputType="textPassword"
+        android:textColor="@color/white"
+        android:textColorHint="@color/bottom_navigation_icon_colors">
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/editPassw2ID"
+        android:layout_width="370dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/white"
+        android:hint="confirmar contraseña"
+        android:inputType="textPassword"
+        android:textColor="@color/white"
+        android:textColorHint="@color/bottom_navigation_icon_colors">
+
+    </EditText>
+
+    <Button
+        android:id="@+id/buttonRegistroID"
+        android:layout_width="370dp"
+        android:layout_height="64dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="Registro"
+        android:textSize="16sp">
+
+    </Button>
+
+    <ProgressBar
+        android:id="@+id/progress_circular_ID"
+        android:layout_width="370dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:visibility="invisible">
+
+    </ProgressBar>
+
+</LinearLayout>

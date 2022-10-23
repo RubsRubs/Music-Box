@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#3C3A3A"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".jSONCRUD">
+
+    <EditText
+        android:id="@+id/nameID"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="15dp"
+        android:hint="name"
+        android:textColor="@color/white"
+        android:textColorHint="@color/bottom_navigation_icon_colors" />
+
+    <EditText
+        android:id="@+id/artistImageURLID"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="15dp"
+        android:hint="artistImageURL"
+        android:textColor="@color/white"
+        android:textColorHint="@color/bottom_navigation_icon_colors" />
+
+    <EditText
+        android:id="@+id/albumTitleID"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="15dp"
+        android:hint="albumTitle"
+        android:textColor="@color/white"
+        android:textColorHint="@color/bottom_navigation_icon_colors" />
+
+    <EditText
+        android:id="@+id/genreID"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="15dp"
+        android:hint="genre"
+        android:textColor="@color/white"
+        android:textColorHint="@color/bottom_navigation_icon_colors" />
+
+    <EditText
+        android:id="@+id/imgURLID"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="15dp"
+        android:hint="imgURL"
+        android:textColor="@color/white"
+        android:textColorHint="@color/bottom_navigation_icon_colors" />
+
+    <EditText
+        android:id="@+id/durationID"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="15dp"
+        android:hint="duration"
+        android:textColor="@color/white"
+        android:textColorHint="@color/bottom_navigation_icon_colors" />
+
+
+    <EditText
+        android:id="@+id/fileURLID"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="15dp"
+        android:hint="fileURL"
+        android:textColor="@color/white"
+        android:textColorHint="@color/bottom_navigation_icon_colors" />
+
+    <EditText
+        android:id="@+id/songTitleID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:hint="songTitle"
+        android:textColor="@color/white"
+        android:textColorHint="@color/bottom_navigation_icon_colors"
+        android:textSize="20sp">
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/yearEDIT"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:hint="year"
+        android:textColor="@color/white"
+        android:textColorHint="@color/bottom_navigation_icon_colors"
+        android:textSize="20sp">
+
+    </EditText>
+
+    <Button
+        android:id="@+id/buttonID"
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:text="Registrar">
+
+    </Button>
+
+</LinearLayout>
