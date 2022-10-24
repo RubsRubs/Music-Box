@@ -33,6 +33,22 @@
             android:layout_height="100dp"
             android:layout_alignParentBottom="true"
             android:src="@drawable/gradient_background" />
+
+        <TextView
+            android:id="@+id/txtV_artist_activity_name_ID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:shadowColor="@color/black"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="0"
+            android:text="ArtistName"
+            android:textColor="@color/white"
+            android:textSize="35dp" />
+
     </RelativeLayout>
 
 

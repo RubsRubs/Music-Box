@@ -2,11 +2,14 @@ package com.example.streamingaudioplayer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -41,6 +44,12 @@ public class SearchActivity extends AppCompatActivity implements Filterable {
         setContentView(view);
 
         getSupportActionBar().hide(); //escondemos la action bar
+
+        //cambiamos el color de la status bar
+        Window window = SearchActivity.this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(ContextCompat.getColor(SearchActivity.this, R.color.black));
 
         searchView = binding.searhViewID;
         searchView.setIconified(false); //desiconificamos la lupa para poder hacer focus en el searchview y poder abrir el teclado automáticamente al iniciar la activity
