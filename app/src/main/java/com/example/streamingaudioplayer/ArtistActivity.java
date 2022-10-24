@@ -31,9 +31,6 @@ public class ArtistActivity extends AppCompatActivity {
         artist = (Artist) bundle.getSerializable("artist");
         Glide.with(getApplicationContext()).load(artist.getArtistImageURL()).fitCenter().into(binding.artistImgViewID);
 
-        TabLayOutAlbumsFragment tabLayOutAlbumsFragment = new TabLayOutAlbumsFragment();
-        tabLayOutAlbumsFragment.setArguments(bundle); //pasamos el bundle recibido del recyclerview al ViewPagerFragmentAdapter primero y luego a su fragment correspondiente...
-
         viewPager();
     }
 

@@ -13,12 +13,6 @@
             android:name=".MainActivity"
             android:exported="true" />
         <activity
-            android:name=".PruebaFirebaseQuery"
-            android:exported="true" />
-        <activity
-            android:name=".jSONCRUD"
-            android:exported="true" />
-        <activity
             android:name=".AlbumActivity"
             android:exported="true" />
         <activity

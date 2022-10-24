@@ -32,6 +32,9 @@ public class ViewPagerFragmentAdapter extends FragmentStateAdapter {
                 break;
             case 1:
                 fragment = new TabLayOutBiographyFragment();
+                bundle = new Bundle();
+                bundle.putSerializable("artist", artist);
+                fragment.setArguments(bundle);//pasamos el bundle con el objeto artist al fragment
         }
         return fragment;
     }

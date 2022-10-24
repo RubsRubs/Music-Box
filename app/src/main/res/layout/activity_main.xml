@@ -21,23 +21,23 @@
         android:layout_marginTop="40dp"
         android:layout_marginBottom="24dp"
         android:autofillHints="emailAddress"
+        android:backgroundTint="@color/white"
         android:hint="email"
         android:inputType="textEmailAddress"
         android:textColor="@color/white"
-        android:textColorHint="@color/bottom_navigation_icon_colors"
-        android:backgroundTint="@color/white"/>
+        android:textColorHint="@color/bottom_navigation_icon_colors" />
 
     <EditText
         android:id="@+id/editPasswID"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginBottom="24dp"
+        android:backgroundTint="@color/white"
         android:hint="contraseña"
         android:importantForAutofill="no"
         android:inputType="textPassword"
         android:textColor="@color/white"
-        android:textColorHint="@color/bottom_navigation_icon_colors"
-        android:backgroundTint="@color/white"/>
+        android:textColorHint="@color/bottom_navigation_icon_colors" />
 
     <Button
         android:id="@+id/buttonAccederID"
