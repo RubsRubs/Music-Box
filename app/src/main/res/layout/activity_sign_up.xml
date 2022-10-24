@@ -11,13 +11,13 @@
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="250dp"
+        android:layout_height="235dp"
         android:src="@drawable/music_box_logo" />
 
     <EditText
         android:id="@+id/editEmailID"
         android:layout_width="370dp"
-        android:layout_height="48dp"
+        android:layout_height="45dp"
         android:layout_gravity="center"
         android:backgroundTint="@color/white"
         android:hint="email"
@@ -30,7 +30,7 @@
     <EditText
         android:id="@+id/editUserID"
         android:layout_width="370dp"
-        android:layout_height="48dp"
+        android:layout_height="45dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/white"
@@ -44,7 +44,7 @@
     <EditText
         android:id="@+id/editPassw1ID"
         android:layout_width="370dp"
-        android:layout_height="48dp"
+        android:layout_height="45dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/white"
@@ -58,7 +58,7 @@
     <EditText
         android:id="@+id/editPassw2ID"
         android:layout_width="370dp"
-        android:layout_height="48dp"
+        android:layout_height="45dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/white"
@@ -72,7 +72,7 @@
     <Button
         android:id="@+id/buttonRegistroID"
         android:layout_width="370dp"
-        android:layout_height="64dp"
+        android:layout_height="62dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:text="Registro"
@@ -81,14 +81,12 @@
     </Button>
 
     <ProgressBar
-        android:id="@+id/progress_circular_ID"
+        android:id="@+id/sign_up_progress_circular_ID"
         android:layout_width="370dp"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:background="@color/white"
-        android:visibility="invisible">
-
-    </ProgressBar>
+        android:layout_marginTop="8dp"
+        android:background="@color/black"
+        android:visibility="invisible" />
 
 </LinearLayout>

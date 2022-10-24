@@ -2,10 +2,12 @@ package com.example.streamingaudioplayer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+
 import com.example.streamingaudioplayer.databinding.ActivityMainBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -56,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void login(String email, String passw) {
 
+        binding.loginProgressCircularID.setVisibility(View.VISIBLE);
+
         FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.signInWithEmailAndPassword(email, passw).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -65,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 } else {
+                    binding.loginProgressCircularID.setVisibility(View.INVISIBLE);
                     Toast.makeText(MainActivity.this, "Fallo al iniciar sesión", Toast.LENGTH_SHORT).show();
                 }
             }

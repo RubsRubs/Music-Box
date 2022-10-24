@@ -2,10 +2,12 @@ package com.example.streamingaudioplayer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+
 import com.example.streamingaudioplayer.databinding.ActivitySignUpBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -13,6 +15,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,6 +64,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void registro(String email, String user, String passw) {
 
+        binding.signUpProgressCircularID.setVisibility(View.VISIBLE);
+
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
         auth.createUserWithEmailAndPassword(email, passw).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -83,6 +88,7 @@ public class SignUpActivity extends AppCompatActivity {
                         }
                     });
                 } else {
+                    binding.signUpProgressCircularID.setVisibility(View.INVISIBLE);
                     Toast.makeText(SignUpActivity.this, "Fallo al registrar el usuario", Toast.LENGTH_SHORT).show();
                 }
             }
