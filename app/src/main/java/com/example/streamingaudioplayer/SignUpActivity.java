@@ -65,16 +65,8 @@ public class SignUpActivity extends AppCompatActivity {
                 String passw = binding.editPassw1ID.getText().toString();
                 String passw2 = binding.editPassw2ID.getText().toString();
 
-                if (!user.isEmpty() && !email.isEmpty() && !passw.isEmpty()) {
-                    if (passw.length() >= 8) {
-                        if (passw.equals(passw2)) {
-                            registro(email, user, passw);
-                        } else {
-                            Toast.makeText(SignUpActivity.this, "Las contraseñas deben coincidir", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Toast.makeText(SignUpActivity.this, "La contraseña debe contener al menos 8 caracteres", Toast.LENGTH_SHORT).show();
-                    }
+                if (!user.isEmpty() && !email.isEmpty() && !passw.isEmpty() && !passw2.isEmpty()) {
+                    registro(email, user, passw, passw2);
                 } else {
                     Toast.makeText(SignUpActivity.this, "Rellene todos los campos", Toast.LENGTH_SHORT).show();
                 }
@@ -82,36 +74,42 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-    public void registro(String email, String user, String passw) {
+    public void registro(String email, String user, String passw, String passw2) {
 
-        binding.signUpProgressCircularID.setVisibility(View.VISIBLE);
+        if (awesomeValidation.validate()) { //si el email y la contraseña tienen los formatos correctos
+            if (passw.equals(passw2)) {
 
-        FirebaseAuth auth = FirebaseAuth.getInstance();
+                binding.signUpProgressCircularID.setVisibility(View.VISIBLE);
 
-        auth.createUserWithEmailAndPassword(email, passw).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task1) {
-                if (task1.isSuccessful()) {
-                    DatabaseReference dbr = FirebaseDatabase.getInstance().getReference(); //este objeto hace referencia al nodo principal de la bd en real-time
-                    Map<String, Object> map = new HashMap<>(); //mapa de valores
-                    map.put("email", email);
-                    map.put("user", user);
+                firebaseAuth = FirebaseAuth.getInstance();
+                firebaseAuth.createUserWithEmailAndPassword(email, passw).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task1) {
+                        if (task1.isSuccessful()) {
+                            DatabaseReference dbr = FirebaseDatabase.getInstance().getReference(); //este objeto hace referencia al nodo principal de la bd en real-time
+                            Map<String, Object> map = new HashMap<>(); //mapa de valores
+                            map.put("email", email);
+                            map.put("user", user);
 
-                    String id = auth.getCurrentUser().getUid(); //obtenemos el id del usuario recién registrado para después utilizarlo para generar su mapa de valores correspondiente.
-                    dbr.child("Users").child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() { //.child crea un nuevo nodo
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task2) {
-                            Toast.makeText(SignUpActivity.this, "Usuario registrado con éxito", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getApplicationContext(), NavigationActivity.class);
-                            startActivity(intent);
-                            finish();
+                            String id = firebaseAuth.getCurrentUser().getUid(); //obtenemos el id del usuario recién registrado para después utilizarlo para generar su mapa de valores correspondiente.
+                            dbr.child("Users").child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() { //.child crea un nuevo nodo
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task2) {
+                                    Toast.makeText(SignUpActivity.this, "Usuario registrado con éxito", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getApplicationContext(), NavigationActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            });
+                        } else {
+                            binding.signUpProgressCircularID.setVisibility(View.INVISIBLE);
+                            Toast.makeText(SignUpActivity.this, "Fallo al registrar el usuario", Toast.LENGTH_SHORT).show();
                         }
-                    });
-                } else {
-                    binding.signUpProgressCircularID.setVisibility(View.INVISIBLE);
-                    Toast.makeText(SignUpActivity.this, "Fallo al registrar el usuario", Toast.LENGTH_SHORT).show();
-                }
+                    }
+                });
+            } else {
+                Toast.makeText(SignUpActivity.this, "Las contraseñas deben coincidir", Toast.LENGTH_SHORT).show();
             }
-        });
+        }
     }
 }
