@@ -6,11 +6,14 @@ import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.example.streamingaudioplayer.databinding.ActivitySignUpBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,6 +28,10 @@ import java.util.Map;
 public class SignUpActivity extends AppCompatActivity {
 
     ActivitySignUpBinding binding;
+    FirebaseAuth firebaseAuth;
+    AwesomeValidation awesomeValidation;
+    String email;
+    String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +47,10 @@ public class SignUpActivity extends AppCompatActivity {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(ContextCompat.getColor(SignUpActivity.this, R.color.black));
+
+        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC); //utilizamos la versión básica de AwesomeValidation
+        awesomeValidation.addValidation(binding.editEmailID, Patterns.EMAIL_ADDRESS, "Formato incorrecto"); //si no se mete una dirección de correo válida salta el error
+        awesomeValidation.addValidation(binding.editPassw1ID, ".{6,}", "Mínimo 6 caracteres"); //si la contraseña no tiene al menos 6 caracteres salta el error
     }
 
     @Override
