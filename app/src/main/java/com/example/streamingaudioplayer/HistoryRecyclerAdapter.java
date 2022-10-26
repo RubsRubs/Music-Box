@@ -8,10 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -19,15 +17,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 
-public class FavouritesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class HistoryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
     ArrayList<String> songKeysList = new ArrayList<>();
 
-    public FavouritesRecyclerAdapter(Context ctx) {
+    public HistoryRecyclerAdapter(Context ctx) {
         this.context = ctx;
     }
 
@@ -87,18 +84,24 @@ public class FavouritesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView
             @Override
             public void onClick(View view) {
                 PopupMenu popupMenu = new PopupMenu(context, view);
-                popupMenu.getMenuInflater().inflate(R.menu.favourites_item_pop_up_menu, popupMenu.getMenu());
+                popupMenu.getMenuInflater().inflate(R.menu.history_item_pop_up_menu, popupMenu.getMenu());
                 popupMenu.show();
 
                 popupMenu.setOnMenuItemClickListener((menuItem) -> {
 
                     switch (menuItem.getItemId()) {
 
-                        case R.id.agregar_a_playlist_desde_favoritos_ID: {
+                        case R.id.agregar_a_favoritos_desde_historyID: {
 
                             break;
                         }
-                        case R.id.eliminar_de_favoritosID: {
+
+                        case R.id.agregar_a_playlist_desde_history_ID: {
+
+                            //break;
+                        }
+
+                        case R.id.eliminar_de_historial_ID: {
                             delete(songKey);
                         }
                     }
@@ -131,7 +134,7 @@ public class FavouritesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         String userId = firebaseAuth.getCurrentUser().getUid();
 
-        databaseReference.child("Users").child(userId).child("favourites").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Users").child(userId).child("history").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot data : snapshot.getChildren()) {

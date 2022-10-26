@@ -26,12 +26,12 @@ public class LibraryFragment extends Fragment {
     FragmentLibraryBinding binding;
     RecyclerView recyclerView;
     FavouritesRecyclerAdapter favouritesRecyclerAdapter;
+    HistoryRecyclerAdapter historyRecyclerAdapter;
     ArrayList<String> songKeys;
     FirebaseAuth firebaseAuth;
     String userId;
     DatabaseReference databaseReference;
     boolean favourites;
-    boolean history;
 
     public LibraryFragment() {
         // Required empty public constructor
@@ -57,7 +57,6 @@ public class LibraryFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 favourites = true;
-                history = false;
                 setIconsColors();
                 //en este caso tenemos el mismo RecyclerView para dos litas diferentes, cada vez que hacemos click creamos un nuevo FavouritesRecyclerAdapter para refrescar la vista.
                 refreshAndCreateNewRecyclerViewAdapater();
@@ -68,7 +67,6 @@ public class LibraryFragment extends Fragment {
         binding.layoutHistoryID.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                history = true;
                 favourites = false;
                 setIconsColors();
                 //en este caso tenemos el mismo RecyclerView para dos litas diferentes, cada vez que hacemos click creamos un nuevo FavouritesRecyclerAdapter para refrescar la vista.
@@ -127,13 +125,25 @@ public class LibraryFragment extends Fragment {
     }
 
     public void refreshAndCreateNewRecyclerViewAdapater() {
-        favouritesRecyclerAdapter = new FavouritesRecyclerAdapter(getContext());
-        recyclerView.setAdapter(favouritesRecyclerAdapter);
+
+        if (favourites == true) {
+            favouritesRecyclerAdapter = new FavouritesRecyclerAdapter(getContext());
+            recyclerView.setAdapter(favouritesRecyclerAdapter);
+        } else {
+            historyRecyclerAdapter = new HistoryRecyclerAdapter(getContext());
+            recyclerView.setAdapter(historyRecyclerAdapter);
+        }
     }
 
     public void setRecyclerAdapter(ArrayList<String> songKeys) {
-        favouritesRecyclerAdapter.setItems(songKeys);
-        favouritesRecyclerAdapter.notifyDataSetChanged();
+
+        if (favourites == true) {
+            favouritesRecyclerAdapter.setItems(songKeys);
+            favouritesRecyclerAdapter.notifyDataSetChanged();
+        } else {
+            historyRecyclerAdapter.setItems(songKeys);
+            historyRecyclerAdapter.notifyDataSetChanged();
+        }
         binding.libraryProgressCircularID.setVisibility(View.INVISIBLE);
     }
 

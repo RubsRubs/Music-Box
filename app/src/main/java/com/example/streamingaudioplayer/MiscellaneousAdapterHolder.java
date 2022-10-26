@@ -7,12 +7,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class FavouritesAdapterHolder extends RecyclerView.ViewHolder {
+public class MiscellaneousAdapterHolder extends RecyclerView.ViewHolder {
 
     public TextView txtArtist, txtSong;
     public ImageView imageViewPicture, imageViewMenu;
 
-    public FavouritesAdapterHolder(@NonNull View itemView) {
+    public MiscellaneousAdapterHolder(@NonNull View itemView) {
         super(itemView);
         txtArtist = itemView.findViewById(R.id.artistID);
         txtSong = itemView.findViewById(R.id.songID);
