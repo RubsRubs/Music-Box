@@ -73,6 +73,9 @@
         <entry key="..\:/Users/Synthwavex/Documents/Music-Box/app/src/main/res/layout/prueba_list_view_item.xml" value="0.35688405797101447" />
         <entry key="..\:/Users/Synthwavex/Documents/Music-Box/app/src/main/res/layout/slider_item.xml" value="0.35688405797101447" />
         <entry key="..\:/Users/Synthwavex/Documents/Music-Box/app/src/main/res/layout/song_favourites_item.xml" value="0.427536231884058" />
+        <entry key="..\:/Users/Synthwavex/Documents/Music-Box/app/src/main/res/menu/favourites_item_pop_up_menu.xml" value="0.446875" />
+        <entry key="..\:/Users/Synthwavex/Documents/Music-Box/app/src/main/res/menu/history_item_pop_up_menu.xml" value="0.446875" />
+        <entry key="..\:/Users/Synthwavex/Documents/Music-Box/app/src/main/res/menu/song_item_pop_up_menu.xml" value="0.446875" />
       </map>
     </option>
   </component>
