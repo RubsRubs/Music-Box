@@ -27,6 +27,11 @@ public class LibraryFragment extends Fragment {
     RecyclerView recyclerView;
     FavouritesRecyclerAdapter favouritesRecyclerAdapter;
     ArrayList<String> songKeys;
+    FirebaseAuth firebaseAuth;
+    String userId;
+    DatabaseReference databaseReference;
+    boolean favourites;
+    boolean history;
 
     public LibraryFragment() {
         // Required empty public constructor
@@ -40,8 +45,6 @@ public class LibraryFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
-        favouritesRecyclerAdapter = new FavouritesRecyclerAdapter(getContext());
-        recyclerView.setAdapter(favouritesRecyclerAdapter);
 
         return binding.getRoot();
     }
@@ -53,32 +56,95 @@ public class LibraryFragment extends Fragment {
         binding.layoutFavoritosID.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getUserFavouritesKeys();
+                favourites = true;
+                history = false;
+                setIconsColors();
+                //en este caso tenemos el mismo RecyclerView para dos litas diferentes, cada vez que hacemos click creamos un nuevo FavouritesRecyclerAdapter para refrescar la vista.
+                refreshAndCreateNewRecyclerViewAdapater();
+                getSongsKeys();
+            }
+        });
+
+        binding.layoutHistoryID.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                history = true;
+                favourites = false;
+                setIconsColors();
+                //en este caso tenemos el mismo RecyclerView para dos litas diferentes, cada vez que hacemos click creamos un nuevo FavouritesRecyclerAdapter para refrescar la vista.
+                refreshAndCreateNewRecyclerViewAdapater();
+                getSongsKeys();
             }
         });
     }
 
-    public void getUserFavouritesKeys() {
+    public void getSongsKeys() {
 
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        String userId = auth.getCurrentUser().getUid();
-        DatabaseReference dbr = FirebaseDatabase.getInstance().getReference();
-        dbr.child("Users").child(userId).child("favourites").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                songKeys = new ArrayList<>();
-                for (DataSnapshot data : snapshot.getChildren()) {
-                    SongIDModel songIDModel = data.getValue(SongIDModel.class);
-                    songKeys.add(songIDModel.getSongId());
+        binding.libraryProgressCircularID.setVisibility(View.VISIBLE);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        userId = firebaseAuth.getCurrentUser().getUid();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        if (favourites == true) {
+
+            databaseReference.child("Users").child(userId).child("favourites").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    songKeys = new ArrayList<>();
+                    for (DataSnapshot data : snapshot.getChildren()) {
+                        SongIDModel songIDModel = data.getValue(SongIDModel.class);
+                        songKeys.add(songIDModel.getSongId());
+                    }
+                    setRecyclerAdapter(songKeys);
                 }
-                favouritesRecyclerAdapter.setItems(songKeys);
-                favouritesRecyclerAdapter.notifyDataSetChanged();
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
 
-            }
-        });
+        } else {
+
+            binding.historyIconID.setImageResource(R.drawable.ic_baseline_history_on);
+
+            databaseReference.child("Users").child(userId).child("history").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    songKeys = new ArrayList<>();
+                    for (DataSnapshot data : snapshot.getChildren()) {
+                        SongIDModel songIDModel = data.getValue(SongIDModel.class);
+                        songKeys.add(songIDModel.getSongId());
+                    }
+                    setRecyclerAdapter(songKeys);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+        }
+    }
+
+    public void refreshAndCreateNewRecyclerViewAdapater() {
+        favouritesRecyclerAdapter = new FavouritesRecyclerAdapter(getContext());
+        recyclerView.setAdapter(favouritesRecyclerAdapter);
+    }
+
+    public void setRecyclerAdapter(ArrayList<String> songKeys) {
+        favouritesRecyclerAdapter.setItems(songKeys);
+        favouritesRecyclerAdapter.notifyDataSetChanged();
+        binding.libraryProgressCircularID.setVisibility(View.INVISIBLE);
+    }
+
+    public void setIconsColors() {
+
+        if (favourites == true) {
+            binding.favouritesIconID.setImageResource(R.drawable.ic_baseline_favorite_on);
+            binding.historyIconID.setImageResource(R.drawable.ic_baseline_history_off);
+        } else {
+            binding.favouritesIconID.setImageResource(R.drawable.ic_baseline_favorite_off);
+            binding.historyIconID.setImageResource(R.drawable.ic_baseline_history_on);
+        }
     }
 }
