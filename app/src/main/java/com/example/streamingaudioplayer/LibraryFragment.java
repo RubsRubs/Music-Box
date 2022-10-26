@@ -68,8 +68,8 @@ public class LibraryFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 songKeys = new ArrayList<>();
                 for (DataSnapshot data : snapshot.getChildren()) {
-                    Favourite favourite = data.getValue(Favourite.class);
-                    songKeys.add(favourite.getSongId());
+                    SongIDModel songIDModel = data.getValue(SongIDModel.class);
+                    songKeys.add(songIDModel.getSongId());
                 }
                 favouritesRecyclerAdapter.setItems(songKeys);
                 favouritesRecyclerAdapter.notifyDataSetChanged();

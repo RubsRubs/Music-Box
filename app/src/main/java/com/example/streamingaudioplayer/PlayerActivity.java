@@ -10,11 +10,15 @@ import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.streamingaudioplayer.databinding.ActivityPlayerBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -60,6 +64,8 @@ public class PlayerActivity extends AppCompatActivity {
 
     private void retreiveDataFromDataBase() {
 
+        binding.playerProgressCircularID.setVisibility(View.VISIBLE);
+
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("artists").addValueEventListener(new ValueEventListener() {
             @Override
@@ -82,15 +88,16 @@ public class PlayerActivity extends AppCompatActivity {
                                     actualArtist = artist;
                                     actualAlbum = album;
                                     actualSong = song;
-
                                 }
                             }
                         }
                     }
                 }
                 loadLayOutData();
+                binding.playerProgressCircularID.setVisibility(View.VISIBLE);
                 View view = binding.getRoot();
                 play(view);
+                addToHistory();
             }
 
             @Override
@@ -265,5 +272,24 @@ public class PlayerActivity extends AppCompatActivity {
         } else {
             return totalOut;
         }
+    }
+
+    private void addToHistory() {
+
+        String idNumber = Double.toString(actualSong.getIdNumber());
+        SongIDModel songIDModel = new SongIDModel(idNumber);
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(); //este objeto hace referencia al nodo principal de la bd en real-time
+        String userId = auth.getCurrentUser().getUid(); //obtenemos el id del usuario recién registrado para después utilizarlo para generar su mapa de valores correspondiente.
+
+        //String favouritesKey = databaseReference.child("Users").child("favourites").push().getKey();
+
+        databaseReference.child("Users").child(userId).child("history").push().setValue(songIDModel).addOnCompleteListener(new OnCompleteListener<Void>() { //.child crea un nuevo nodo
+            @Override
+            public void onComplete(@NonNull Task<Void> task1) {
+
+            }
+        });
     }
 }

@@ -1,14 +1,14 @@
 package com.example.streamingaudioplayer;
 
-public class Favourite {
+public class SongIDModel {
 
     private String songId;
 
-    public Favourite() {
+    public SongIDModel() {
         // Default constructor required for calls to DataSnapshot.getValue(Favourite.class)
     }
 
-    public Favourite(String songId) {
+    public SongIDModel(String songId) {
         this.songId = songId;
     }
 
