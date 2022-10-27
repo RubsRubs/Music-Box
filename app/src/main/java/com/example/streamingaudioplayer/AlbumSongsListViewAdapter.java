@@ -69,7 +69,7 @@ public class AlbumSongsListViewAdapter extends ArrayAdapter {
 
             private void addToFavourites() {
 
-                String idNumber = Double.toString(song.getIdNumber());
+                String idNumber = Double.toString(song.getSongId());
                 SongIDModel songIDModel = new SongIDModel(idNumber);
 
                 FirebaseAuth auth = FirebaseAuth.getInstance();

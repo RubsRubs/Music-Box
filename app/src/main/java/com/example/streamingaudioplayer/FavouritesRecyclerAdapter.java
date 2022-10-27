@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +19,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -25,14 +27,14 @@ import java.util.ArrayList;
 public class FavouritesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
-    ArrayList<String> songKeysList = new ArrayList<>();
+    ArrayList<String> songIdsList = new ArrayList<>();
 
     public FavouritesRecyclerAdapter(Context ctx) {
         this.context = ctx;
     }
 
     public void setItems(ArrayList<String> songKeysList) {
-        this.songKeysList.addAll(songKeysList);
+        this.songIdsList.addAll(songKeysList);
     }
 
     @NonNull
@@ -46,7 +48,7 @@ public class FavouritesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         MiscellaneousAdapterHolder miscellaneousAdapterHolder = (MiscellaneousAdapterHolder) holder;
-        String songKey = songKeysList.get(position);
+        String songId = songIdsList.get(position);
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("artists").addValueEventListener(new ValueEventListener() {
@@ -64,9 +66,9 @@ public class FavouritesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView
 
                         for (Song song : songs) {
 
-                            for (int i = 0; i < songKeysList.size(); i++) {
+                            for (int i = 0; i < songIdsList.size(); i++) {
 
-                                if (Double.toString(song.getIdNumber()).equals(songKey)) {
+                                if (Double.toString(song.getSongId()).equals(songId)) {
                                     Glide.with(miscellaneousAdapterHolder.itemView).load(album.getImgURL()).fitCenter().into(miscellaneousAdapterHolder.imageViewPicture);
                                     miscellaneousAdapterHolder.txtArtist.setText(artist.getName());
                                     miscellaneousAdapterHolder.txtSong.setText(song.getSongTitle());
@@ -99,7 +101,7 @@ public class FavouritesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView
                             break;
                         }
                         case R.id.eliminar_de_favoritosID: {
-                            delete(songKey);
+                            delete(songId);
                         }
                     }
                     return true;
@@ -111,8 +113,8 @@ public class FavouritesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-                bundle.putInt("songKeyPosition", position);
-                bundle.putStringArrayList("songKeysList", songKeysList);
+                bundle.putInt("songIdPosition", position);
+                bundle.putStringArrayList("songIdsList", songIdsList);
                 Intent intent = new Intent(context, PlayerActivity.class);
                 intent.putExtras(bundle);
                 context.startActivity(intent);
@@ -122,7 +124,7 @@ public class FavouritesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public int getItemCount() {
-        return songKeysList.size();
+        return songIdsList.size();
     }
 
     public void delete(String songKey) {
@@ -131,22 +133,20 @@ public class FavouritesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         String userId = firebaseAuth.getCurrentUser().getUid();
 
-        databaseReference.child("Users").child(userId).child("favourites").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot data : snapshot.getChildren()) {
-                    SongIDModel songIDModel = data.getValue(SongIDModel.class);
+        Query delete = databaseReference.child("Users").child(userId).child("favourites").orderByChild("songId").equalTo(songKey);
 
-                    if (songIDModel.getSongId().equals(songKey)) {
-                        data.getRef().removeValue();
-                        songKeysList.clear(); //limpiamos el arraylist para que se vuelva refrescar el recyclerview
-                    }
+        delete.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                songIdsList.clear(); //limpiamos el arraylist para que se vuelva refrescar el recyclerview
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    data.getRef().removeValue();
+                    Toast.makeText(context.getApplicationContext(), "Canción eliminada", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+            public void onCancelled(DatabaseError databaseError) {
             }
         });
     }

@@ -78,13 +78,11 @@
 
     </RelativeLayout>
 
-
     <TextView
         android:id="@+id/txtV_song_ID"
         android:layout_width="match_parent"
         android:layout_height="26sp"
         android:gravity="center_horizontal"
-        android:text="Nombre de la canción"
         android:textColor="@color/white"
         android:textSize="22sp"
         android:textStyle="bold" />
@@ -94,7 +92,7 @@
         android:layout_width="match_parent"
         android:layout_height="22sp"
         android:gravity="center_horizontal"
-        android:text="Artista"
+
         android:textColor="@color/white"
         android:textSize="18sp" />
 

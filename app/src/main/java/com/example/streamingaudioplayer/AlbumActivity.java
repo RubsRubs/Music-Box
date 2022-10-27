@@ -74,9 +74,9 @@ public class AlbumActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int songPosition, long l) {
 
-                ArrayList<String> songKeysList = generateAlbumSongKeys();
+                ArrayList<String> songIdsList = generateAlbumSongKeys();
                 Bundle bundle = new Bundle();
-                bundle.putStringArrayList("songKeysList", songKeysList);
+                bundle.putStringArrayList("songIdsList", songIdsList);
                 Intent intent = new Intent(getApplicationContext(), PlayerActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
@@ -84,11 +84,11 @@ public class AlbumActivity extends AppCompatActivity {
 
             private ArrayList<String> generateAlbumSongKeys() {
 
-                ArrayList<String> songKeysList = new ArrayList<>();
+                ArrayList<String> songIdsList = new ArrayList<>();
                 for (Song song : songs) {
-                    songKeysList.add(Double.toString(song.getIdNumber()));
+                    songIdsList.add(Double.toString(song.getSongId()));
                 }
-                return songKeysList;
+                return songIdsList;
             }
         });
     }

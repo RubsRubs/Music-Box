@@ -31,9 +31,9 @@ import java.util.ArrayList;
 public class PlayerActivity extends AppCompatActivity {
 
     ActivityPlayerBinding binding;
-    ArrayList<String> songKeysList;
-    int songKeyPosition;
-    String songKey;
+    ArrayList<String> songIdsList;
+    int songIdPosition;
+    String songId;
     static MediaPlayer mediaPlayer; //importante ponerlo como estático para que al retroceder a la activity anterior mientras está sonando una canción y elegir una nueva el objeto siga siendo !=null
     private Handler handler = new Handler();
     Artist actualArtist;
@@ -55,9 +55,9 @@ public class PlayerActivity extends AppCompatActivity {
         window.setStatusBarColor(ContextCompat.getColor(PlayerActivity.this, R.color.black));
 
         Bundle bundle = getIntent().getExtras();
-        songKeysList = bundle.getStringArrayList("songKeysList");
-        songKeyPosition = bundle.getInt("songKeyPosition");
-        songKey = songKeysList.get(songKeyPosition);
+        songIdsList = bundle.getStringArrayList("songIdsList");
+        songIdPosition = bundle.getInt("songIdPosition");
+        songId = songIdsList.get(songIdPosition);
 
         retreiveDataFromDataBase();
     }
@@ -82,9 +82,9 @@ public class PlayerActivity extends AppCompatActivity {
 
                         for (Song song : songs) {
 
-                            for (int i = 0; i < songKeysList.size(); i++) {
+                            for (int i = 0; i < songIdsList.size(); i++) {
 
-                                if (Double.toString(song.getIdNumber()).equals(songKey)) {
+                                if (Double.toString(song.getSongId()).equals(songId)) {
                                     actualArtist = artist;
                                     actualAlbum = album;
                                     actualSong = song;
@@ -200,13 +200,13 @@ public class PlayerActivity extends AppCompatActivity {
         mediaPlayer.release();
         mediaPlayer = null; //importante poner el objeto a null para resetear el espacio en memoria y que vuelva a reproducir desde cero
 
-        if (songKeyPosition == songKeysList.size() - 1) { //si estamos en la última canción de la lista, al darle a next se reproducirá la primera canción de la lista...
-            songKeyPosition = 0;
+        if (songIdPosition == songIdsList.size() - 1) { //si estamos en la última canción de la lista, al darle a next se reproducirá la primera canción de la lista...
+            songIdPosition = 0;
             Toast.makeText(PlayerActivity.this, "Fin de la lista de reproducción", Toast.LENGTH_LONG).show();
         } else {
-            songKeyPosition = songKeyPosition + 1;
+            songIdPosition = songIdPosition + 1;
         }
-        songKey = songKeysList.get(songKeyPosition);
+        songId = songIdsList.get(songIdPosition);
         retreiveDataFromDataBase();
     }
 
@@ -215,12 +215,12 @@ public class PlayerActivity extends AppCompatActivity {
         mediaPlayer.release();
         mediaPlayer = null; //importante poner el objeto a null para resetear el espacio en memoria y que vuelva a reproducir desde cero
 
-        if (songKeyPosition == 0) {//si estamos en la primera canción de la lista al darle a previous se reproducirá la última canción de la lista...
-            songKeyPosition = songKeysList.size() - 1;
+        if (songIdPosition == 0) {//si estamos en la primera canción de la lista al darle a previous se reproducirá la última canción de la lista...
+            songIdPosition = songIdsList.size() - 1;
         } else {
-            songKeyPosition = songKeyPosition - 1;
+            songIdPosition = songIdPosition - 1;
         }
-        songKey = songKeysList.get(songKeyPosition);
+        songId = songIdsList.get(songIdPosition);
         retreiveDataFromDataBase();
     }
 
@@ -276,7 +276,7 @@ public class PlayerActivity extends AppCompatActivity {
 
     private void addToHistory() {
 
-        String idNumber = Double.toString(actualSong.getIdNumber());
+        String idNumber = Double.toString(actualSong.getSongId());
         SongIDModel songIDModel = new SongIDModel(idNumber);
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
