@@ -27,7 +27,7 @@ public class LibraryFragment extends Fragment {
     RecyclerView recyclerView;
     FavouritesRecyclerAdapter favouritesRecyclerAdapter;
     HistoryRecyclerAdapter historyRecyclerAdapter;
-    ArrayList<String> songKeys;
+    ArrayList<String> songIdsList;
     FirebaseAuth firebaseAuth;
     String userId;
     DatabaseReference databaseReference;
@@ -60,7 +60,7 @@ public class LibraryFragment extends Fragment {
                 setIconsColors();
                 //en este caso tenemos el mismo RecyclerView para dos litas diferentes, cada vez que hacemos click creamos un nuevo FavouritesRecyclerAdapter para refrescar la vista.
                 refreshAndCreateNewRecyclerViewAdapater();
-                getSongsKeys();
+                getSongIds();
             }
         });
 
@@ -71,12 +71,12 @@ public class LibraryFragment extends Fragment {
                 setIconsColors();
                 //en este caso tenemos el mismo RecyclerView para dos litas diferentes, cada vez que hacemos click creamos un nuevo FavouritesRecyclerAdapter para refrescar la vista.
                 refreshAndCreateNewRecyclerViewAdapater();
-                getSongsKeys();
+                getSongIds();
             }
         });
     }
 
-    public void getSongsKeys() {
+    public void getSongIds() {
 
         binding.libraryProgressCircularID.setVisibility(View.VISIBLE);
 
@@ -89,12 +89,12 @@ public class LibraryFragment extends Fragment {
             databaseReference.child("Users").child(userId).child("favourites").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    songKeys = new ArrayList<>();
+                    songIdsList = new ArrayList<>();
                     for (DataSnapshot data : snapshot.getChildren()) {
                         SongIDModel songIDModel = data.getValue(SongIDModel.class);
-                        songKeys.add(songIDModel.getSongId());
+                        songIdsList.add(songIDModel.getSongId());
                     }
-                    setRecyclerAdapter(songKeys);
+                    setRecyclerAdapter(songIdsList);
                 }
 
                 @Override
@@ -109,12 +109,12 @@ public class LibraryFragment extends Fragment {
             databaseReference.child("Users").child(userId).child("history").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    songKeys = new ArrayList<>();
+                    songIdsList = new ArrayList<>();
                     for (DataSnapshot data : snapshot.getChildren()) {
                         SongIDModel songIDModel = data.getValue(SongIDModel.class);
-                        songKeys.add(songIDModel.getSongId());
+                        songIdsList.add(songIDModel.getSongId());
                     }
-                    setRecyclerAdapter(songKeys);
+                    setRecyclerAdapter(songIdsList);
                 }
 
                 @Override

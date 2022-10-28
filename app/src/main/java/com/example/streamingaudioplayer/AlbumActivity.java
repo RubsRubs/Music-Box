@@ -76,6 +76,7 @@ public class AlbumActivity extends AppCompatActivity {
 
                 ArrayList<String> songIdsList = generateAlbumSongKeys();
                 Bundle bundle = new Bundle();
+                bundle.putInt("songIdPosition", songPosition);
                 bundle.putStringArrayList("songIdsList", songIdsList);
                 Intent intent = new Intent(getApplicationContext(), PlayerActivity.class);
                 intent.putExtras(bundle);

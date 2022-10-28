@@ -33,8 +33,8 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         this.context = ctx;
     }
 
-    public void setItems(ArrayList<String> songKeysList) {
-        this.songIdsList.addAll(songKeysList);
+    public void setItems(ArrayList<String> songIdsList) {
+        this.songIdsList.addAll(songIdsList);
     }
 
     @NonNull
@@ -133,21 +133,20 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         return songIdsList.size();
     }
 
-    public void delete(String songKey) {
+    public void delete(String songId) {
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         String userId = firebaseAuth.getCurrentUser().getUid();
 
-        Query delete = databaseReference.child("Users").child(userId).child("history").orderByChild("songId").equalTo(songKey);
+        Query delete = databaseReference.child("Users").child(userId).child("history").orderByChild("songId").equalTo(songId);
 
         delete.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                songIdsList.clear(); //limpiamos el arraylist para que se vuelva refrescar el recyclerview
+                songIdsList.clear(); // importante limpiar la lista cada vez que se elimina un item para que no se dupliquen en la parte de abajo...
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     data.getRef().removeValue();
-                    Toast.makeText(context.getApplicationContext(), "Canción eliminada", Toast.LENGTH_SHORT).show();
                 }
             }
 
