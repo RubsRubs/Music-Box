@@ -47,7 +47,8 @@
             android:shadowRadius="0"
             android:text="ArtistName"
             android:textColor="@color/white"
-            android:textSize="35dp" />
+            android:textSize="35dp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 

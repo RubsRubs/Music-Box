@@ -16,23 +16,14 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/txtV_playlists_ID"
             android:layout_width="100dp"
             android:layout_height="55dp"
             android:gravity="center_vertical"
             android:text="Playlists"
             android:textColor="@color/white"
-            android:textSize="17dp" />
-
-        <ImageView
-            android:id="@+id/playLists_icon_ID"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="8dp"
-            android:gravity="center_vertical"
-            android:src="@drawable/ic_baseline_playlist_play_off">
-
-        </ImageView>
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -49,14 +40,15 @@
             android:gravity="center_vertical"
             android:text="Favoritos"
             android:textColor="@color/white"
-            android:textSize="17dp" />
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/favourites_icon_ID"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:src="@drawable/ic_baseline_favorite_off">
 
@@ -77,14 +69,15 @@
             android:gravity="center_vertical"
             android:text="Historial"
             android:textColor="@color/white"
-            android:textSize="17dp" />
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/history_icon_ID"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:src="@drawable/ic_baseline_history_off">
 

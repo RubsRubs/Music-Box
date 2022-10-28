@@ -1,16 +1,15 @@
 package com.example.streamingaudioplayer;
 
+import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.streamingaudioplayer.databinding.FragmentLibraryBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -18,7 +17,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 
 public class LibraryFragment extends Fragment {
@@ -41,6 +39,9 @@ public class LibraryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentLibraryBinding.inflate(getLayoutInflater());
 
+        //le metemos el underline al TextView txtVPlaylistsID
+        binding.txtVPlaylistsID.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+
         recyclerView = binding.libraryRecyclerViewId;
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
@@ -52,6 +53,14 @@ public class LibraryFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+        binding.layoutPlayListsID.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), PlayListsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         binding.layoutFavoritosID.setOnClickListener(new View.OnClickListener() {
             @Override

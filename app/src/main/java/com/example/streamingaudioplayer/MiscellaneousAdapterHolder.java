@@ -14,9 +14,9 @@ public class MiscellaneousAdapterHolder extends RecyclerView.ViewHolder {
 
     public MiscellaneousAdapterHolder(@NonNull View itemView) {
         super(itemView);
-        txtArtist = itemView.findViewById(R.id.artistID);
-        txtSong = itemView.findViewById(R.id.songID);
-        imageViewPicture = itemView.findViewById(R.id.song_favourites_item_imageID);
+        txtArtist = itemView.findViewById(R.id.txtV_artistID);
+        txtSong = itemView.findViewById(R.id.txtV_songID);
+        imageViewPicture = itemView.findViewById(R.id.song_miscellanous_item_imageID);
         imageViewMenu = itemView.findViewById(R.id.item_menu_ID);
     }
 }

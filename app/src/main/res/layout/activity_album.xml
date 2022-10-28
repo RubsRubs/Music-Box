@@ -43,7 +43,8 @@
                 android:layout_marginTop="15dp"
                 android:text="Album"
                 android:textColor="@color/white"
-                android:textSize="25dp" />
+                android:textSize="25dp"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/album_Activity__ArtistName_text_view_ID"
