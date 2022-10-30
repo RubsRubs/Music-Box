@@ -45,8 +45,8 @@ public class PlayListsActivity extends AppCompatActivity implements PlayListAddD
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
-        playListsRecyclerViewAdapter = new PlayListsRecyclerViewAdapter(getApplicationContext());
-        recyclerView.setAdapter(playListsRecyclerViewAdapter);
+
+        playlists = new ArrayList<>();
         loadPlaylistsData();
 
         //cambiamos el color de la status bar
@@ -78,11 +78,14 @@ public class PlayListsActivity extends AppCompatActivity implements PlayListAddD
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                playlists = new ArrayList<>();
+                playlists.clear();
                 for (DataSnapshot data : snapshot.getChildren()) {
                     Playlist playlist = data.getValue(Playlist.class);
                     playlists.add(playlist);
                 }
+                //importante crear un nuevo adaptador cada vez para que no se duplicquen los items en el RecyclerView
+                playListsRecyclerViewAdapter = new PlayListsRecyclerViewAdapter(getApplicationContext());
+                recyclerView.setAdapter(playListsRecyclerViewAdapter);
                 playListsRecyclerViewAdapter.setItems(playlists);
                 playListsRecyclerViewAdapter.notifyDataSetChanged();
             }
