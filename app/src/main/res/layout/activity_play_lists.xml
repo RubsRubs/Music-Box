@@ -8,8 +8,8 @@
     android:orientation="vertical"
     tools:context=".PlayListsActivity">
 
-    <ListView
-        android:id="@+id/playlists_listview_ID"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/playlists_recycler_view_ID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
