@@ -3,14 +3,12 @@ package com.example.streamingaudioplayer;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.example.streamingaudioplayer.databinding.ActivityPlayListsBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -60,13 +58,15 @@ public class PlayListsActivity extends AppCompatActivity implements PlayListAddD
     }
 
     @Override
-    public void applyTexts(String title, String description) {
-        addPlaylist(title, description);
+    public void applyTexts(String title, String description, boolean publica) {
+        addPlaylist(title, description, publica);
         //Toast.makeText(PlayListsActivity.this, title + description, Toast.LENGTH_SHORT).show();
 
     }
 
-    public void addPlaylist(String title, String description) {
+    public void addPlaylist(String title, String description, boolean publica) {
+
+        Playlist playlist = new Playlist(title, description, publica);
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(); //este objeto hace referencia al nodo principal de la bd en real-time
@@ -77,7 +77,7 @@ public class PlayListsActivity extends AppCompatActivity implements PlayListAddD
         databaseReference.child("Users").child(userId).child("playlists").push().setValue(playlist).addOnCompleteListener(new OnCompleteListener<Void>() { //.child crea un nuevo nodo
             @Override
             public void onComplete(@NonNull Task<Void> task1) {
-                Toast.makeText(getApplicationContext(), "Canción agregada a favoritos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Playlist Creada", Toast.LENGTH_SHORT).show();
             }
         });
     }

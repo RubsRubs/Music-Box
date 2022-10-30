@@ -1,17 +1,19 @@
 package com.example.streamingaudioplayer;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Playlist implements Serializable {
 
-    private String title;
-    private String description;
-    // private ArrayList<String> songIds;
+    public String title;
+    public String description;
+    public boolean publica;
+    public ArrayList<String> songIds;
 
     public Playlist() {
     }
 
-    public Playlist(String title, String description) {
+    public Playlist(String title, String description, boolean publica) {
         this.title = title;
         this.description = description;
     }

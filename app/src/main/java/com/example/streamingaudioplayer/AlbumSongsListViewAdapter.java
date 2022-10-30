@@ -69,8 +69,8 @@ public class AlbumSongsListViewAdapter extends ArrayAdapter {
 
             private void addToFavourites() {
 
-                String idNumber = Double.toString(song.getSongId());
-                SongIDModel songIDModel = new SongIDModel(idNumber);
+                String songId = Double.toString(song.getSongId());
+                SongIDModel songIdModel = new SongIDModel(songId);
 
                 FirebaseAuth auth = FirebaseAuth.getInstance();
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(); //este objeto hace referencia al nodo principal de la bd en real-time
@@ -78,7 +78,7 @@ public class AlbumSongsListViewAdapter extends ArrayAdapter {
 
                 //String favouritesKey = databaseReference.child("Users").child("favourites").push().getKey();
 
-                databaseReference.child("Users").child(userId).child("favourites").push().setValue(songIDModel).addOnCompleteListener(new OnCompleteListener<Void>() { //.child crea un nuevo nodo
+                databaseReference.child("Users").child(userId).child("favourites").push().setValue(songIdModel).addOnCompleteListener(new OnCompleteListener<Void>() { //.child crea un nuevo nodo
                     @Override
                     public void onComplete(@NonNull Task<Void> task1) {
                         Toast.makeText(getContext(), "Canción agregada a favoritos", Toast.LENGTH_SHORT).show();

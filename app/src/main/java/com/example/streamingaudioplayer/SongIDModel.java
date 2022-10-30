@@ -1,8 +1,10 @@
 package com.example.streamingaudioplayer;
 
-public class SongIDModel {
+import java.io.Serializable;
 
-    private String songId;
+public class SongIDModel implements Serializable {
+
+    public String songId;
 
     public SongIDModel() {
         // Default constructor required for calls to DataSnapshot.getValue(Favourite.class)

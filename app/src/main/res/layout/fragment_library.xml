@@ -7,9 +7,9 @@
     android:orientation="vertical"
     tools:context=".LibraryFragment">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/layout_play_lists_ID"
-        android:layout_width="150dp"
+        android:layout_width="250dp"
         android:layout_height="55dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="15dp"
@@ -17,15 +17,22 @@
 
         <TextView
             android:id="@+id/txtV_playlists_ID"
-            android:layout_width="100dp"
+            android:layout_width="match_parent"
             android:layout_height="55dp"
             android:gravity="center_vertical"
-            android:text="Playlists"
+            android:text="Listas de reproducción"
             android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold" />
 
-    </LinearLayout>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="13dp"
+            android:src="@drawable/ic_baseline_chevron_right" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/layout_favoritos_ID"

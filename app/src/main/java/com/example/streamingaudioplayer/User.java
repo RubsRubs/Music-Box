@@ -1,9 +1,11 @@
 package com.example.streamingaudioplayer;
 
-public class User {
+import java.io.Serializable;
 
-    private String email;
-    private String user;
+public class User implements Serializable {
+
+    public String email;
+    public String user;
 
     public User() {
     }
