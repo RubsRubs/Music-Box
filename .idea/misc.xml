@@ -79,11 +79,16 @@
         <entry key="..\:/Users/Synthwavex/Documents/Music-Box/app/src/main/res/layout/fragment_home.xml" value="0.4116847826086957" />
         <entry key="..\:/Users/Synthwavex/Documents/Music-Box/app/src/main/res/layout/fragment_library.xml" value="0.427536231884058" />
         <entry key="..\:/Users/Synthwavex/Documents/Music-Box/app/src/main/res/layout/fragment_settings.xml" value="0.4116847826086957" />
+        <entry key="..\:/Users/Synthwavex/Documents/Music-Box/app/src/main/res/layout/fragment_tab_lay_out_albums.xml" value="0.389945652173913" />
         <entry key="..\:/Users/Synthwavex/Documents/Music-Box/app/src/main/res/layout/fragment_tab_lay_out_biography.xml" value="0.35688405797101447" />
+        <entry key="..\:/Users/Synthwavex/Documents/Music-Box/app/src/main/res/layout/fragment_tab_lay_out_favourites.xml" value="0.389945652173913" />
+        <entry key="..\:/Users/Synthwavex/Documents/Music-Box/app/src/main/res/layout/fragment_tab_lay_out_history.xml" value="0.389945652173913" />
+        <entry key="..\:/Users/Synthwavex/Documents/Music-Box/app/src/main/res/layout/fragment_tab_lay_out_play_lists.xml" value="0.389945652173913" />
         <entry key="..\:/Users/Synthwavex/Documents/Music-Box/app/src/main/res/layout/fragment_user.xml" value="0.35688405797101447" />
         <entry key="..\:/Users/Synthwavex/Documents/Music-Box/app/src/main/res/layout/miscellaneous_song_item.xml" value="0.4116847826086957" />
         <entry key="..\:/Users/Synthwavex/Documents/Music-Box/app/src/main/res/layout/playlists_listview_item.xml" value="0.4116847826086957" />
         <entry key="..\:/Users/Synthwavex/Documents/Music-Box/app/src/main/res/layout/prueba_list_view_item.xml" value="0.35688405797101447" />
+        <entry key="..\:/Users/Synthwavex/Documents/Music-Box/app/src/main/res/layout/search_view_item.xml" value="0.39719202898550726" />
         <entry key="..\:/Users/Synthwavex/Documents/Music-Box/app/src/main/res/layout/slider_item.xml" value="0.35688405797101447" />
         <entry key="..\:/Users/Synthwavex/Documents/Music-Box/app/src/main/res/layout/song_favourites_item.xml" value="0.427536231884058" />
         <entry key="..\:/Users/Synthwavex/Documents/Music-Box/app/src/main/res/menu/favourites_item_pop_up_menu.xml" value="0.446875" />

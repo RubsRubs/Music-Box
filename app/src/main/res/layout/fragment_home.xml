@@ -9,16 +9,31 @@
     tools:context=".HomeFragment">
 
         <TextView
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
+            android:id="@+id/txtV_artist_activity_name_ID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:shadowColor="@color/black"
+            android:layout_marginTop="10dp"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="0"
+            android:text="Inicio"
+            android:textColor="@color/white"
+            android:textSize="35dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_marginTop="70dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:text="Recomendaciones"
             android:textColor="@color/white"
-            android:textSize="25dp" />
+            android:textSize="20dp" />
 
         <com.smarteist.autoimageslider.SliderView
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="100dp"
             android:id="@+id/sliderView_Recomendaciones_ID"
             android:layout_width="match_parent"
             android:layout_height="200dp"
@@ -36,15 +51,14 @@
             app:sliderScrollTimeInSec="2"
             app:sliderStartAutoCycle="true" />
 
-
         <TextView
-            android:layout_marginTop="300dp"
-            android:layout_width="match_parent"
+            android:layout_marginTop="320dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:text="Novedades"
             android:textColor="@color/white"
-            android:textSize="25dp" />
+            android:textSize="20dp" />
 
         <com.smarteist.autoimageslider.SliderView
             android:layout_marginTop="350dp"

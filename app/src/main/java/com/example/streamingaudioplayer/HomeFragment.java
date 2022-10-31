@@ -1,6 +1,5 @@
 package com.example.streamingaudioplayer;
 
-
 import android.graphics.Color;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -24,7 +23,7 @@ public class HomeFragment extends Fragment {
     FragmentHomeBinding binding;
     SliderView sliderView1;
     SliderView sliderView2;
-    ArrayList<AudioFileModel> audioFileModelArrayList;
+    ArrayList<String> songIdsList;
     SliderAdapter sliderAdapter;
 
     public HomeFragment() {
@@ -65,20 +64,27 @@ public class HomeFragment extends Fragment {
 
     public void loadRecomendacionesSlidersData() {
 
-        DatabaseReference dbr = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        dbr.child("recomendaciones").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("artists").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                audioFileModelArrayList = new ArrayList<>();
+                songIdsList = new ArrayList<>();
 
-                for (DataSnapshot data : snapshot.getChildren()) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Artist artist = dataSnapshot.getValue(Artist.class);
 
-                    AudioFileModel audioFile = data.getValue(AudioFileModel.class);
-                    audioFileModelArrayList.add(audioFile);
-                    sliderAdapter = new SliderAdapter(getContext(), audioFileModelArrayList); //al utilizar el adaptador con sliderView hay que crear un nuevo objeto adaptador cada vez que se cogen los datos de firebase, ya que al ser un slider se cargan los objetos uno a uno en pantalla, al contrario que el RecyclerView que carga todos a la vez en una lista y con solo decalarar el objeto adaptador una vez y meterle el arraylist como argumento es suficiente.
-                    sliderView1.setSliderAdapter(sliderAdapter);
+                    ArrayList<Album> albums = artist.getAlbums();
+                    for (Album album : albums) {
+
+                        ArrayList<Song> songs = album.getSongs();
+
+                        int random = (int) (Math.random() * 3 + 1);
+                        songIdsList.add(Double.toString(songs.get(random).getSongId()));
+                        sliderAdapter = new SliderAdapter(getContext(), songIdsList); //al utilizar el adaptador con sliderView hay que crear un nuevo objeto adaptador cada vez que se cogen los datos de firebase, ya que al ser un slider se cargan los objetos uno a uno en pantalla, al contrario que el RecyclerView que carga todos a la vez en una lista y con solo decalarar el objeto adaptador una vez y meterle el arraylist como argumento es suficiente.
+                        sliderView1.setSliderAdapter(sliderAdapter);
+                    }
                 }
             }
 
@@ -91,20 +97,27 @@ public class HomeFragment extends Fragment {
 
     public void loadNovedadesSlidersData() {
 
-        DatabaseReference dbr = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        dbr.child("novedades").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("artists").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                audioFileModelArrayList = new ArrayList<>();
+                songIdsList = new ArrayList<>();
 
-                for (DataSnapshot data : snapshot.getChildren()) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Artist artist = dataSnapshot.getValue(Artist.class);
 
-                    AudioFileModel audioFile = data.getValue(AudioFileModel.class);
-                    audioFileModelArrayList.add(audioFile);
-                    sliderAdapter = new SliderAdapter(getContext(), audioFileModelArrayList); //al utilizar el adaptador con sliderView hay que crear un nuevo objeto adaptador cada vez que se cogen los datos de firebase, ya que al ser un slider se cargan los objetos uno a uno en pantalla, al contrario que el RecyclerView que carga todos a la vez en una lista y con solo decalarar el objeto adaptador una vez y meterle el arraylist como argumento es suficiente.
-                    sliderView2.setSliderAdapter(sliderAdapter);
+                    ArrayList<Album> albums = artist.getAlbums();
+                    for (Album album : albums) {
+
+                        ArrayList<Song> songs = album.getSongs();
+
+                        int random = (int) (Math.random() * 3 + 1);
+                        songIdsList.add(Double.toString(songs.get(random).getSongId()));
+                        sliderAdapter = new SliderAdapter(getContext(), songIdsList); //al utilizar el adaptador con sliderView hay que crear un nuevo objeto adaptador cada vez que se cogen los datos de firebase, ya que al ser un slider se cargan los objetos uno a uno en pantalla, al contrario que el RecyclerView que carga todos a la vez en una lista y con solo decalarar el objeto adaptador una vez y meterle el arraylist como argumento es suficiente.
+                        sliderView2.setSliderAdapter(sliderAdapter);
+                    }
                 }
             }
 
@@ -114,5 +127,4 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-
 }

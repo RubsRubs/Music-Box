@@ -34,7 +34,6 @@ public class TabLayOutFavouritesFragment extends Fragment {
     String userId;
     DatabaseReference databaseReference;
 
-
     public TabLayOutFavouritesFragment() {
         // Required empty public constructor
     }
@@ -53,7 +52,6 @@ public class TabLayOutFavouritesFragment extends Fragment {
 
         return binding.getRoot();
     }
-
 
     public void getSongIds() {
 
