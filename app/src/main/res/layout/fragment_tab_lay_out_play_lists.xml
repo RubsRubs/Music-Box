@@ -19,8 +19,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="320dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginStart="300dp"
+        android:layout_marginEnd="35dp"
         android:layout_marginBottom="15dp"
         android:backgroundTint="@color/cardview_dark_background"
         android:src="@drawable/add_circle" />

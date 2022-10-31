@@ -91,7 +91,6 @@ public class SearchActivity extends AppCompatActivity implements Filterable {
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
 
-
             if (charSequence == null || charSequence.length() == 0) {
                 fileredList.clear(); //si no existe ningún patrón limpiamos y vaciamos la lista
             } else {

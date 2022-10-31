@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -179,6 +180,17 @@ public class PlayerActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 previous(view);
+            }
+        });
+
+        binding.txtVArtistaID.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("artist", actualArtist);
+                Intent intent = new Intent(getApplicationContext(), ArtistActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);// addFlags para que no me de error al pasar a la nueva activity
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
     }

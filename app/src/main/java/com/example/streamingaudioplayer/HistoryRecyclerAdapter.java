@@ -99,6 +99,7 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     switch (menuItem.getItemId()) {
 
                         case R.id.agregar_a_favoritos_desde_historyID: {
+                            addToFavourites(songId);
                             break;
                         }
 
@@ -153,6 +154,24 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+
+    private void addToFavourites(String songId) {
+
+        SongIDModel songIdModel = new SongIDModel(songId);
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(); //este objeto hace referencia al nodo principal de la bd en real-time
+        String userId = auth.getCurrentUser().getUid(); //obtenemos el id del usuario recién registrado para después utilizarlo para generar su mapa de valores correspondiente.
+
+        //String favouritesKey = databaseReference.child("Users").child("favourites").push().getKey();
+
+        databaseReference.child("Users").child(userId).child("favourites").push().setValue(songIdModel).addOnCompleteListener(new OnCompleteListener<Void>() { //.child crea un nuevo nodo
+            @Override
+            public void onComplete(@NonNull Task<Void> task1) {
+                Toast.makeText(context.getApplicationContext(), "Canción agregada a favoritos", Toast.LENGTH_SHORT).show();
             }
         });
     }
