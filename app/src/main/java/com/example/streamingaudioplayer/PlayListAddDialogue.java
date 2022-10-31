@@ -20,7 +20,6 @@ public class PlayListAddDialogue extends AppCompatDialogFragment {
     EditText editTitle, editDescription;
     SwitchCompat switchCompat;
     private PlayListAddDialogueListener playListAddDialogueListener;
-
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {

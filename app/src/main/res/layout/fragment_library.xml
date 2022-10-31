@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,108 +8,34 @@
     android:orientation="vertical"
     tools:context=".LibraryFragment">
 
-    <RelativeLayout
-        android:id="@+id/layout_play_lists_ID"
-        android:layout_width="250dp"
-        android:layout_height="55dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal">
+    <TextView
+        android:id="@+id/txtV_artist_activity_name_ID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:shadowColor="@color/black"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="0"
+        android:text="Música"
+        android:textColor="@color/white"
+        android:textSize="35dp"
+        android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/txtV_playlists_ID"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:gravity="center_vertical"
-            android:text="Listas de reproducción"
-            android:textColor="@color/white"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="13dp"
-            android:src="@drawable/ic_baseline_chevron_right" />
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/layout_favoritos_ID"
-        android:layout_width="150dp"
-        android:layout_height="55dp"
-        android:layout_marginLeft="20dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="55dp"
-            android:gravity="center_vertical"
-            android:text="Favoritos"
-            android:textColor="@color/white"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:id="@+id/favourites_icon_ID"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="10dp"
-            android:gravity="center_vertical"
-            android:src="@drawable/ic_baseline_favorite_off">
-
-        </ImageView>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layout_history_ID"
-        android:layout_width="150dp"
-        android:layout_height="55dp"
-        android:layout_marginLeft="20dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="55dp"
-            android:gravity="center_vertical"
-            android:text="Historial"
-            android:textColor="@color/white"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:id="@+id/history_icon_ID"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="10dp"
-            android:gravity="center_vertical"
-            android:src="@drawable/ic_baseline_history_off">
-
-        </ImageView>
-
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/library_recycler_view_id"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/library_fragment_TabLayOutID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0dp">
-
-    </androidx.recyclerview.widget.RecyclerView>
-
-    <ProgressBar
-        android:id="@+id/library_progress_circular_ID"
-        android:layout_width="370dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="142.5dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="142.5dp"
         android:background="@color/black"
-        android:visibility="invisible" />
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="#7D7F80" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/library_fragment_view_pagerID"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

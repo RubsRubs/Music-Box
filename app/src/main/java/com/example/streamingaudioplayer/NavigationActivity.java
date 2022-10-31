@@ -12,12 +12,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.example.streamingaudioplayer.databinding.ActivityNavigationBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-public class NavigationActivity extends AppCompatActivity {
+public class NavigationActivity extends AppCompatActivity implements PlayListAddDialogue.PlayListAddDialogueListener  {
 
     ActivityNavigationBinding binding;
     BottomNavigationView bottomNavigationView;
@@ -82,6 +88,29 @@ public class NavigationActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
                 startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public void applyTexts(String title, String description, boolean publica) {
+        addPlaylist(title, description, publica);
+    }
+
+    public void addPlaylist(String title, String description, boolean publica) {
+
+        Playlist playlist = new Playlist(title, description, publica);
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(); //este objeto hace referencia al nodo principal de la bd en real-time
+        String userId = auth.getCurrentUser().getUid(); //obtenemos el id del usuario recién registrado para después utilizarlo para generar su mapa de valores correspondiente.
+
+        //String favouritesKey = databaseReference.child("Users").child("favourites").push().getKey();
+
+        databaseReference.child("Users").child(userId).child("playlists").push().setValue(playlist).addOnCompleteListener(new OnCompleteListener<Void>() { //.child crea un nuevo nodo
+            @Override
+            public void onComplete(@NonNull Task<Void> task1) {
+                Toast.makeText(getApplicationContext(), "Playlist Creada", Toast.LENGTH_SHORT).show();
             }
         });
     }
