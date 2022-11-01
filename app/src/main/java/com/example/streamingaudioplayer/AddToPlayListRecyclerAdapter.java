@@ -9,15 +9,18 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -57,7 +60,7 @@ public class AddToPlayListRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
         ((AddToPlayListAdapterViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addSongToPlayList();
+                addSongToPlayList(playlist);
             }
         });
     }
@@ -67,28 +70,20 @@ public class AddToPlayListRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
         return list.size();
     }
 
-    public void addSongToPlayList() {
+    public void addSongToPlayList(Playlist playlist) {
 
-        ArrayList<String> songIds = new ArrayList<>();
-        songIds.add(bundle.getString("songId"));
-        Playlist playlist = new Playlist(songIds);
-
-      /*  Map<String, Object> map = new HashMap<>(); //mapa de valores
-        map.put("email", email);
-        map.put("user", user);*/
+        Map<String, Object> map = new HashMap<>(); //mapa de valores
+        map.put("songId", bundle.getString("songId"));
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         String userId = firebaseAuth.getCurrentUser().getUid();
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("Users").child(userId).child("playlists").addValueEventListener(new ValueEventListener() {
+        Query update = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("playlists").orderByChild("title").equalTo(playlist.getTitle());
+        update.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot data : snapshot.getChildren()) {
-                    Playlist playlistAux = data.getValue(Playlist.class);
-
-                    if (playlistAux.getTitle().equals(playlist.getTitle())) {
-                        databaseReference.push().setValue(playlist);
-                    }
+                    data.getRef().push().setValue(map);
+                    Toast.makeText(context.getApplicationContext(), "Canción agregada a la lista " + playlist.getTitle(), Toast.LENGTH_SHORT).show();
                 }
             }
 

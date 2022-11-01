@@ -8,7 +8,6 @@ public class Playlist implements Serializable {
     public String title;
     public String description;
     public boolean publica;
-    public ArrayList<String> songIds;
 
     public Playlist() {
     }
@@ -16,10 +15,6 @@ public class Playlist implements Serializable {
     public Playlist(String title, String description, boolean publica) {
         this.title = title;
         this.description = description;
-    }
-
-    public Playlist(ArrayList<String> songIds) {
-        this.songIds = songIds;
     }
 
     public String getTitle() {

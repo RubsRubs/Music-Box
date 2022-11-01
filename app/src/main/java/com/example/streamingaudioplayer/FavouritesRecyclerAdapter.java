@@ -142,6 +142,7 @@ public class FavouritesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView
                 songIdsList.clear(); // importante limpiar la lista cada vez que se elimina un item para que no se dupliquen en la parte de abajo...
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     data.getRef().removeValue();
+                    Toast.makeText(context.getApplicationContext(), "Canción eliminada", Toast.LENGTH_SHORT).show();
                 }
             }
 
