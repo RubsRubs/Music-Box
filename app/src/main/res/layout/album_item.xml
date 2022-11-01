@@ -21,6 +21,6 @@
         android:gravity="center"
         android:text="Album"
         android:textColor="@color/white"
-        android:textSize="15dp"
+        android:textSize="17dp"
         android:textStyle="bold" />
 </LinearLayout>

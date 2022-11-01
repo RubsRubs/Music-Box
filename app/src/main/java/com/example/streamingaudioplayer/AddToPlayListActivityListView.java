@@ -1,17 +1,17 @@
 package com.example.streamingaudioplayer;
 
-import android.os.Bundle;
-
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
+import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
-import com.example.streamingaudioplayer.databinding.FragmentTabLayOutPlayListsBinding;
+import com.example.streamingaudioplayer.databinding.ActivityAddToPlayListListViewBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,40 +21,44 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class TabLayOutPlayListsFragment extends Fragment {
+public class AddToPlayListActivityListView extends AppCompatActivity {
 
-    FragmentTabLayOutPlayListsBinding binding;
+    ActivityAddToPlayListListViewBinding binding;
     RecyclerView recyclerView;
-    PlayListsRecyclerViewAdapter playListsRecyclerViewAdapter;
     ArrayList<Playlist> playlists;
-
-    public TabLayOutPlayListsFragment() {
-        // Required empty public constructor
-    }
+    AddToPlayListRecyclerAdapter addToPlayListRecyclerAdapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentTabLayOutPlayListsBinding.inflate(getLayoutInflater());
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = ActivityAddToPlayListListViewBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
+        getSupportActionBar().hide(); //escondemos la action bar
 
-        recyclerView = binding.playlistsFragmentRecyclerViewID;
+        recyclerView = binding.playListsRecyclerViewID;
         recyclerView.setHasFixedSize(true);
-        LinearLayoutManager manager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
+        LinearLayoutManager manager = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
+
+        //cambiamos el color de la status bar
+        Window window = AddToPlayListActivityListView.this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(ContextCompat.getColor(AddToPlayListActivityListView.this, R.color.black));
 
         playlists = new ArrayList<>();
         loadPlaylistsData();
-
-        return binding.getRoot();
     }
 
     @Override
-    public void onStart() {
+    protected void onStart() {
         super.onStart();
 
-        binding.imgViewAddCircleID.setOnClickListener(new View.OnClickListener() {
+        recyclerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openDialog(); //abrimos ventanita para crear la playlist
+
             }
         });
     }
@@ -74,21 +78,18 @@ public class TabLayOutPlayListsFragment extends Fragment {
                     Playlist playlist = data.getValue(Playlist.class);
                     playlists.add(playlist);
                 }
+
                 //importante crear un nuevo adaptador cada vez para que no se duplicquen los items en el RecyclerView
-                playListsRecyclerViewAdapter = new PlayListsRecyclerViewAdapter(getContext());
-                recyclerView.setAdapter(playListsRecyclerViewAdapter);
-                playListsRecyclerViewAdapter.setItems(playlists);
-                playListsRecyclerViewAdapter.notifyDataSetChanged();
+                Bundle bundle = getIntent().getExtras();
+                addToPlayListRecyclerAdapter = new AddToPlayListRecyclerAdapter(getApplicationContext());
+                recyclerView.setAdapter(addToPlayListRecyclerAdapter);
+                addToPlayListRecyclerAdapter.setItems(playlists, bundle);
+                addToPlayListRecyclerAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-    }
-
-    public void openDialog() {
-        PlayListCreationDialogue playListCreationDialogue = new PlayListCreationDialogue();
-        playListCreationDialogue.show(getParentFragmentManager(), "Playlist");
     }
 }

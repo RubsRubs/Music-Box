@@ -9,11 +9,11 @@
 
     <item
         android:id="@+id/agregar_a_playlist_desde_history_ID"
-        android:title="Agregar a playlist"
+        android:title="Agregar a lista de reproducción"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/eliminar_de_historial_ID"
-        android:title="Eliminar del historial"
+        android:title="Eliminar"
         app:showAsAction="never" />
 </menu>

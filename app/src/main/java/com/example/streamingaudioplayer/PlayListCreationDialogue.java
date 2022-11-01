@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.appcompat.widget.SwitchCompat;
 
-public class PlayListAddDialogue extends AppCompatDialogFragment {
+public class PlayListCreationDialogue extends AppCompatDialogFragment {
 
     EditText editTitle, editDescription;
     SwitchCompat switchCompat;
@@ -27,7 +27,7 @@ public class PlayListAddDialogue extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
-        View view = layoutInflater.inflate(R.layout.add_playlist_dialog_layout, null);
+        View view = layoutInflater.inflate(R.layout.create_playlist_dialogue_layout, null);
 
         builder.setView(view).setTitle("Crear lista de reproducción").setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             @Override

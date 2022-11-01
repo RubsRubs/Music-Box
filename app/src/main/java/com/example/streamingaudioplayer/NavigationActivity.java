@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,7 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class NavigationActivity extends AppCompatActivity implements PlayListAddDialogue.PlayListAddDialogueListener  {
+public class NavigationActivity extends AppCompatActivity implements PlayListCreationDialogue.PlayListAddDialogueListener  {
 
     ActivityNavigationBinding binding;
     BottomNavigationView bottomNavigationView;

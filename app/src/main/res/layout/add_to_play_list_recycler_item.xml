@@ -15,30 +15,23 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/txtV_playlist_title_ID"
+            android:id="@+id/txtV_add_to_play_ist_title_ID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             android:text="Title"
             android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/txtV_playlist_description_ID"
+            android:id="@+id/txtV_add_to_play_ist_description_ID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             android:text="Description"
             android:textColor="@color/white"
-            android:textSize="16dp" />
+            android:textSize="16dp"/>
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/play_lists_item_menu_ID"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_centerVertical="true"
-        android:layout_toEndOf="@id/playlist_item_linear_layout_Id"
-        android:background="@drawable/ic_baseline_more_vert"
-        android:padding="5dp" />
 
 </RelativeLayout>

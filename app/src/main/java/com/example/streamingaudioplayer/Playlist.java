@@ -18,6 +18,10 @@ public class Playlist implements Serializable {
         this.description = description;
     }
 
+    public Playlist(ArrayList<String> songIds) {
+        this.songIds = songIds;
+    }
+
     public String getTitle() {
         return title;
     }

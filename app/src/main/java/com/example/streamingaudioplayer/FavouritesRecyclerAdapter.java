@@ -97,7 +97,8 @@ public class FavouritesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView
                     switch (menuItem.getItemId()) {
 
                         case R.id.agregar_a_playlist_desde_favoritos_ID: {
-
+                            Intent intent = new Intent(context, AddToPlayListActivityListView.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);// addFlags para que no me de error al pasar a la nueva activity
+                            context.startActivity(intent);
                             break;
                         }
                         case R.id.eliminar_de_favoritosID: {

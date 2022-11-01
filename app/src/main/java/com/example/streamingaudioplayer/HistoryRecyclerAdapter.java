@@ -104,8 +104,9 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         }
 
                         case R.id.agregar_a_playlist_desde_history_ID: {
-
-                            //break;
+                            Intent intent = new Intent(context, AddToPlayListActivityListView.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);// addFlags para que no me de error al pasar a la nueva activity
+                            context.startActivity(intent);
+                            break;
                         }
 
                         case R.id.eliminar_de_historial_ID: {

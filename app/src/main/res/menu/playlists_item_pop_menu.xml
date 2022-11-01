@@ -4,6 +4,6 @@
 
     <item
         android:id="@+id/eliminar_playlist_ID"
-        android:title="Eliminar playlist"
+        android:title="Eliminar"
         app:showAsAction="never" />
 </menu>
