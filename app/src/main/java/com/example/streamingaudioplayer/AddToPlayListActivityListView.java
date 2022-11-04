@@ -61,6 +61,13 @@ public class AddToPlayListActivityListView extends AppCompatActivity {
 
             }
         });
+
+        binding.imagvBackID.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     public void loadPlaylistsData() {

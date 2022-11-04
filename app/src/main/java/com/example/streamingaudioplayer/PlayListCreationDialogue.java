@@ -34,7 +34,7 @@ public class PlayListCreationDialogue extends AppCompatDialogFragment {
             public void onClick(DialogInterface dialogInterface, int i) {
 
             }
-        }).setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+        }).setPositiveButton("Crear", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 

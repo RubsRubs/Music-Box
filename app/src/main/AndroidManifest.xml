@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StreamingAudioPlayer">
         <activity
+            android:name=".PlayListDetailsActivity"
+            android:exported="true" />
+        <activity
             android:name=".AddToPlayListActivityListView"
             android:exported="true" />
         <activity

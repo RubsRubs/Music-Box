@@ -11,10 +11,11 @@
 
     <ImageView
         android:id="@+id/img_view_splash_screen_ID"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="0dp"
         android:layout_weight="4"
-        android:src="@drawable/music_box_logo" />
+        android:src="@drawable/music_box_logo"
+        android:layout_gravity="center_horizontal"/>
 
     <ProgressBar
         android:id="@+id/progress_circular_ID"

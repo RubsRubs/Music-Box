@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,12 +26,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class FavouritesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class PlayListDetailsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
     ArrayList<String> songIdsList = new ArrayList<>();
 
-    public FavouritesRecyclerAdapter(Context ctx) {
+    public PlayListDetailsRecyclerAdapter(Context ctx) {
         this.context = ctx;
     }
 
@@ -89,22 +91,19 @@ public class FavouritesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView
             @Override
             public void onClick(View view) {
                 PopupMenu popupMenu = new PopupMenu(context, view);
-                popupMenu.getMenuInflater().inflate(R.menu.favourites_item_pop_up_menu, popupMenu.getMenu());
+                popupMenu.getMenuInflater().inflate(R.menu.playlist_details_item_pop_up_menu, popupMenu.getMenu());
                 popupMenu.show();
 
                 popupMenu.setOnMenuItemClickListener((menuItem) -> {
 
                     switch (menuItem.getItemId()) {
 
-                        case R.id.agregar_a_playlist_desde_favoritos_ID: {
-                            Bundle bundle = new Bundle();
-                            bundle.putString("songId", songId);
-                            Intent intent = new Intent(context, AddToPlayListActivityListView.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);// addFlags para que no me de error al pasar a la nueva activity
-                            intent.putExtras(bundle);
-                            context.startActivity(intent);
+                        case R.id.agregar_a_favoritos_desde_playlist_detail_ID: {
+                            addToFavourites(songId);
                             break;
                         }
-                        case R.id.eliminar_de_favoritosID: {
+
+                        case R.id.eliminar_de_historial_ID: {
                             delete(songId);
                         }
                     }
@@ -137,7 +136,7 @@ public class FavouritesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         String userId = firebaseAuth.getCurrentUser().getUid();
 
-        Query delete = databaseReference.child("Users").child(userId).child("favourites").orderByChild("songId").equalTo(songId);
+        Query delete = databaseReference.child("Users").child(userId).child("history").orderByChild("songId").equalTo(songId);
 
         delete.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -151,6 +150,24 @@ public class FavouritesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+
+    private void addToFavourites(String songId) {
+
+        SongIDModel songIdModel = new SongIDModel(songId);
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(); //este objeto hace referencia al nodo principal de la bd en real-time
+        String userId = auth.getCurrentUser().getUid(); //obtenemos el id del usuario recién registrado para después utilizarlo para generar su mapa de valores correspondiente.
+
+        //String favouritesKey = databaseReference.child("Users").child("favourites").push().getKey();
+
+        databaseReference.child("Users").child(userId).child("favourites").push().setValue(songIdModel).addOnCompleteListener(new OnCompleteListener<Void>() { //.child crea un nuevo nodo
+            @Override
+            public void onComplete(@NonNull Task<Void> task1) {
+                Toast.makeText(context.getApplicationContext(), "Canción agregada a favoritos", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -104,7 +104,10 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         }
 
                         case R.id.agregar_a_playlist_desde_history_ID: {
+                            Bundle bundle = new Bundle();
+                            bundle.putString("songId", songId);
                             Intent intent = new Intent(context, AddToPlayListActivityListView.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);// addFlags para que no me de error al pasar a la nueva activity
+                            intent.putExtras(bundle);
                             context.startActivity(intent);
                             break;
                         }

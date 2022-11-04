@@ -82,7 +82,7 @@ public class AddToPlayListRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot data : snapshot.getChildren()) {
-                    data.getRef().push().setValue(map);
+                    data.getRef().child("songs").push().setValue(map); //al poner .child(songs) si no existe el nodo se crea automáticamente.
                     Toast.makeText(context.getApplicationContext(), "Canción agregada a la lista " + playlist.getTitle(), Toast.LENGTH_SHORT).show();
                 }
             }

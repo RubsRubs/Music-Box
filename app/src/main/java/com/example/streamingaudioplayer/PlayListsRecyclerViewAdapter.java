@@ -1,6 +1,8 @@
 package com.example.streamingaudioplayer;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,19 +39,19 @@ public class PlayListsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.playlists_listview_item, parent, false);
-        return new PlayListAdapterViewHolder(view);
+        return new PlayListsAdapterViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
-        PlayListAdapterViewHolder playListAdapterViewHolder = (PlayListAdapterViewHolder) holder;
+        PlayListsAdapterViewHolder playListsAdapterViewHolder = (PlayListsAdapterViewHolder) holder;
         Playlist playlist = list.get(position);
 
-        playListAdapterViewHolder.titleTextView.setText(playlist.getTitle());
-        playListAdapterViewHolder.descriptionTextView.setText(playlist.getDescription());
+        playListsAdapterViewHolder.titleTextView.setText(playlist.getTitle());
+        playListsAdapterViewHolder.descriptionTextView.setText(playlist.getDescription());
 
-        ((PlayListAdapterViewHolder) holder).imageViewMenu.setOnClickListener(new View.OnClickListener() {
+        ((PlayListsAdapterViewHolder) holder).imageViewMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 PopupMenu popupMenu = new PopupMenu(context, view);
@@ -66,6 +68,17 @@ public class PlayListsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                     }
                     return true;
                 });
+            }
+        });
+
+        ((PlayListsAdapterViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("playListTitle", playlist.getTitle());
+                Intent intent = new Intent(context, PlayListDetailsActivity.class);
+                intent.putExtras(bundle);
+                context.startActivity(intent);
             }
         });
     }
