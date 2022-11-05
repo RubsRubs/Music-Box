@@ -44,11 +44,14 @@ public class AlbumActivity extends AppCompatActivity {
         artist = (Artist) bundle.getSerializable("artist");
         albumPosition = bundle.getInt("albumPosition");
 
+        loadLayOutData();
+        setUpListView();
+    }
+
+    public void loadLayOutData() {
         binding.albumActivityAlbumNameTextViewID.setText(artist.getAlbums().get(albumPosition).getAlbumTitle());
         binding.albumActivityArtistNameTextViewID.setText(artist.getName());
         Glide.with(getApplicationContext()).load(artist.getAlbums().get(albumPosition).getImgURL()).into(binding.albumActivityImgViewID);
-
-        setUpListView();
     }
 
     private void setUpListView() {

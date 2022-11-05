@@ -30,13 +30,15 @@ public class PlayListDetailsRecyclerAdapter extends RecyclerView.Adapter<Recycle
 
     private Context context;
     ArrayList<String> songIdsList = new ArrayList<>();
+    Playlist playlist;
 
     public PlayListDetailsRecyclerAdapter(Context ctx) {
         this.context = ctx;
     }
 
-    public void setItems(ArrayList<String> songIdsList) {
+    public void setItems(ArrayList<String> songIdsList, Playlist playlist) {
         this.songIdsList.addAll(songIdsList);
+        this.playlist = playlist;
     }
 
     @NonNull
@@ -103,7 +105,7 @@ public class PlayListDetailsRecyclerAdapter extends RecyclerView.Adapter<Recycle
                             break;
                         }
 
-                        case R.id.eliminar_de_historial_ID: {
+                        case R.id.eliminar_de_playlist_ID: {
                             delete(songId);
                         }
                     }
@@ -118,7 +120,7 @@ public class PlayListDetailsRecyclerAdapter extends RecyclerView.Adapter<Recycle
                 Bundle bundle = new Bundle();
                 bundle.putInt("songIdPosition", position);
                 bundle.putStringArrayList("songIdsList", songIdsList);
-                Intent intent = new Intent(context, PlayerActivity.class);
+                Intent intent = new Intent(context, PlayerActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);// addFlags para que no me de error al pasar a la nueva activity
                 intent.putExtras(bundle);
                 context.startActivity(intent);
             }
@@ -132,24 +134,31 @@ public class PlayListDetailsRecyclerAdapter extends RecyclerView.Adapter<Recycle
 
     public void delete(String songId) {
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         String userId = firebaseAuth.getCurrentUser().getUid();
-
-        Query delete = databaseReference.child("Users").child(userId).child("history").orderByChild("songId").equalTo(songId);
-
-        delete.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("Users").child(userId).child("playlists").orderByChild("title").equalTo(playlist.getTitle()).addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                songIdsList.clear(); // importante limpiar la lista cada vez que se elimina un item para que no se dupliquen en la parte de abajo...
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    data.getRef().removeValue();
-                    Toast.makeText(context.getApplicationContext(), "Canción eliminada", Toast.LENGTH_SHORT).show();
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                songIdsList.clear();
+                for (DataSnapshot data : snapshot.getChildren()) {
+
+                    DataSnapshot dataSnapshot = data.child("songs");
+
+                    for (DataSnapshot data2 : dataSnapshot.getChildren()) {
+                        SongIDModel songIDModel = data2.getValue(SongIDModel.class);
+
+                        if (songIDModel.getSongId().equals(songId)) {
+                            data2.getRef().removeValue();
+                            Toast.makeText(context.getApplicationContext(), "Canción eliminada", Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError error) {
             }
         });
     }

@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.streamingaudioplayer.databinding.ActivityPlayListDetailsBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -34,7 +35,7 @@ public class PlayListDetailsActivity extends AppCompatActivity {
     String userId;
     DatabaseReference databaseReference;
     Bundle bundle;
-    String playListTitle;
+    Playlist playlist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,9 @@ public class PlayListDetailsActivity extends AppCompatActivity {
         getSupportActionBar().hide(); //escondemos la action bar
 
         bundle = getIntent().getExtras();
-        playListTitle = bundle.getString("playListTitle");
+        playlist = (Playlist) bundle.getSerializable("playList");
+
+        loadLayOutData();
 
         //cambiamos el color de la status bar
         Window window = PlayListDetailsActivity.this.getWindow();
@@ -75,22 +78,33 @@ public class PlayListDetailsActivity extends AppCompatActivity {
         });
     }
 
+    public void loadLayOutData() {
+        binding.playlistDetailsPlaylistTitleTxtViewID.setText(playlist.getTitle());
+        binding.playlistDetailsPlaylistDescriptionTxtViewID.setText(playlist.getDescription());
+    }
+
     public void getSongIds() {
 
         firebaseAuth = FirebaseAuth.getInstance();
         userId = firebaseAuth.getCurrentUser().getUid();
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("Users").child(userId).child("playlists").orderByChild("title").equalTo(playListTitle).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Users").child(userId).child("playlists").orderByChild("title").equalTo(playlist.getTitle()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 songIdsList.clear();
-                for (DataSnapshot data : snapshot.child("songs").getChildren()) {
-                    SongIDModel songIDModel = data.getValue(SongIDModel.class);
-                    songIdsList.add(songIDModel.getSongId());
+                for (DataSnapshot data : snapshot.getChildren()) {
+
+                    DataSnapshot dataSnapshot = data.child("songs");
+
+                    for (DataSnapshot data2 : dataSnapshot.getChildren()) {
+
+                        SongIDModel songIDModel = data2.getValue(SongIDModel.class);
+                        songIdsList.add(songIDModel.getSongId());
+                    }
+                    refreshAndCreateNewRecyclerViewAdapater();
+                    setRecyclerAdapter(songIdsList);
                 }
-                refreshAndCreateNewRecyclerViewAdapater();
-                setRecyclerAdapter(songIdsList);
             }
 
             @Override
@@ -105,7 +119,7 @@ public class PlayListDetailsActivity extends AppCompatActivity {
     }
 
     public void setRecyclerAdapter(ArrayList<String> songIdsList) {
-        playListDetailsRecyclerAdapter.setItems(songIdsList);
+        playListDetailsRecyclerAdapter.setItems(songIdsList, playlist);
         playListDetailsRecyclerAdapter.notifyDataSetChanged();
     }
 }

@@ -75,7 +75,7 @@ public class PlayListsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-                bundle.putString("playListTitle", playlist.getTitle());
+                bundle.putSerializable("playList", playlist);
                 Intent intent = new Intent(context, PlayListDetailsActivity.class);
                 intent.putExtras(bundle);
                 context.startActivity(intent);
