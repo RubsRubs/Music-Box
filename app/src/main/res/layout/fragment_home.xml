@@ -8,76 +8,76 @@
     android:orientation="vertical"
     tools:context=".HomeFragment">
 
-        <TextView
-            android:id="@+id/txtV_artist_activity_name_ID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:shadowColor="@color/black"
-            android:layout_marginTop="10dp"
-            android:shadowDx="0"
-            android:shadowDy="0"
-            android:shadowRadius="0"
-            android:text="Inicio"
-            android:textColor="@color/white"
-            android:textSize="35dp"
-            android:textStyle="bold" />
+    <TextView
+        android:id="@+id/txtV_artist_activity_name_ID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:shadowColor="@color/black"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="0"
+        android:text="Inicio"
+        android:textColor="@color/white"
+        android:textSize="35dp"
+        android:textStyle="bold" />
 
-        <TextView
-            android:layout_marginTop="70dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:text="Recomendaciones"
-            android:textColor="@color/white"
-            android:textSize="20dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="70dp"
+        android:text="Recomendaciones"
+        android:textColor="@color/white"
+        android:textSize="20dp" />
 
-        <com.smarteist.autoimageslider.SliderView
-            android:layout_marginTop="100dp"
-            android:id="@+id/sliderView_Recomendaciones_ID"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            app:sliderAnimationDuration="600"
-            app:sliderAutoCycleDirection="right"
-            app:sliderAutoCycleEnabled="true"
-            app:sliderIndicatorAnimationDuration="600"
-            app:sliderIndicatorGravity="center_horizontal|bottom"
-            app:sliderIndicatorMargin="15dp"
-            app:sliderIndicatorOrientation="horizontal"
-            app:sliderIndicatorPadding="3dp"
-            app:sliderIndicatorRadius="2dp"
-            app:sliderIndicatorSelectedColor="#5A5A5A"
-            app:sliderIndicatorUnselectedColor="#FFF"
-            app:sliderScrollTimeInSec="2"
-            app:sliderStartAutoCycle="true" />
+    <com.smarteist.autoimageslider.SliderView
+        android:id="@+id/sliderView_Recomendaciones_ID"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="100dp"
+        app:sliderAnimationDuration="600"
+        app:sliderAutoCycleDirection="right"
+        app:sliderAutoCycleEnabled="true"
+        app:sliderIndicatorAnimationDuration="600"
+        app:sliderIndicatorGravity="center_horizontal|bottom"
+        app:sliderIndicatorMargin="15dp"
+        app:sliderIndicatorOrientation="horizontal"
+        app:sliderIndicatorPadding="3dp"
+        app:sliderIndicatorRadius="2dp"
+        app:sliderIndicatorSelectedColor="#5A5A5A"
+        app:sliderIndicatorUnselectedColor="#FFF"
+        app:sliderScrollTimeInSec="2"
+        app:sliderStartAutoCycle="true" />
 
-        <TextView
-            android:layout_marginTop="320dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:text="Novedades"
-            android:textColor="@color/white"
-            android:textSize="20dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="320dp"
+        android:text="Novedades"
+        android:textColor="@color/white"
+        android:textSize="20dp" />
 
-        <com.smarteist.autoimageslider.SliderView
-            android:layout_marginTop="350dp"
-            android:id="@+id/sliderView_Novedades_ID"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            app:sliderAnimationDuration="600"
-            app:sliderAutoCycleDirection="right"
-            app:sliderAutoCycleEnabled="true"
-            app:sliderIndicatorAnimationDuration="600"
-            app:sliderIndicatorGravity="center_horizontal|bottom"
-            app:sliderIndicatorMargin="15dp"
-            app:sliderIndicatorOrientation="horizontal"
-            app:sliderIndicatorPadding="3dp"
-            app:sliderIndicatorRadius="2dp"
-            app:sliderIndicatorSelectedColor="#5A5A5A"
-            app:sliderIndicatorUnselectedColor="#FFF"
-            app:sliderScrollTimeInSec="2"
-            app:sliderStartAutoCycle="true" />
+    <com.smarteist.autoimageslider.SliderView
+        android:id="@+id/sliderView_Novedades_ID"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="350dp"
+        app:sliderAnimationDuration="600"
+        app:sliderAutoCycleDirection="right"
+        app:sliderAutoCycleEnabled="true"
+        app:sliderIndicatorAnimationDuration="600"
+        app:sliderIndicatorGravity="center_horizontal|bottom"
+        app:sliderIndicatorMargin="15dp"
+        app:sliderIndicatorOrientation="horizontal"
+        app:sliderIndicatorPadding="3dp"
+        app:sliderIndicatorRadius="2dp"
+        app:sliderIndicatorSelectedColor="#5A5A5A"
+        app:sliderIndicatorUnselectedColor="#FFF"
+        app:sliderScrollTimeInSec="2"
+        app:sliderStartAutoCycle="true" />
 
 
 </FrameLayout>

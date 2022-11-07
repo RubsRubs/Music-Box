@@ -90,6 +90,7 @@ public class SignUpActivity extends AppCompatActivity {
                             Map<String, Object> map = new HashMap<>(); //mapa de valores
                             map.put("email", email);
                             map.put("user", user);
+                            map.put("publico", false);
 
                             String id = firebaseAuth.getCurrentUser().getUid(); //obtenemos el id del usuario recién registrado para después utilizarlo para generar su mapa de valores correspondiente.
                             dbr.child("Users").child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() { //.child crea un nuevo nodo
