@@ -76,7 +76,7 @@ public class AddToPlayListActivityListView extends AppCompatActivity {
         String userId = firebaseAuth.getCurrentUser().getUid();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        databaseReference.child("Users").child(userId).child("playlists").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("playlists").orderByChild("userId").equalTo(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 

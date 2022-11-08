@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class NavigationActivity extends AppCompatActivity implements PlayListCreationDialogue.PlayListAddDialogueListener  {
+public class NavigationActivity extends AppCompatActivity implements PlayListCreationDialogue.PlayListAddDialogueListener {
 
     ActivityNavigationBinding binding;
     BottomNavigationView bottomNavigationView;
@@ -93,20 +93,20 @@ public class NavigationActivity extends AppCompatActivity implements PlayListCre
 
     @Override
     public void applyTexts(String title, String description, boolean publica) {
-        addPlaylist(title, description, publica);
-    }
-
-    public void addPlaylist(String title, String description, boolean publica) {
-
-        Playlist playlist = new Playlist(title, description, publica);
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(); //este objeto hace referencia al nodo principal de la bd en real-time
-        String userId = auth.getCurrentUser().getUid(); //obtenemos el id del usuario recién registrado para después utilizarlo para generar su mapa de valores correspondiente.
+        String userId = auth.getCurrentUser().getUid();
+        Playlist playlist = new Playlist(title, description, publica, userId);
+        addPlaylist(playlist);
+    }
+
+    public void addPlaylist(Playlist playlist) {
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
         //String favouritesKey = databaseReference.child("Users").child("favourites").push().getKey();
 
-        databaseReference.child("Users").child(userId).child("playlists").push().setValue(playlist).addOnCompleteListener(new OnCompleteListener<Void>() { //.child crea un nuevo nodo
+        databaseReference.child("playlists").push().setValue(playlist).addOnCompleteListener(new OnCompleteListener<Void>() { //.child crea un nuevo nodo
             @Override
             public void onComplete(@NonNull Task<Void> task1) {
                 Toast.makeText(getApplicationContext(), "Playlist Creada", Toast.LENGTH_SHORT).show();

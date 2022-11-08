@@ -60,7 +60,7 @@ public class AddToPlayListRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
         ((AddToPlayListAdapterViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addSongToPlayList(playlist);
+                addSongToPlayList(playlist.getTitle());
             }
         });
     }
@@ -70,20 +70,18 @@ public class AddToPlayListRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
         return list.size();
     }
 
-    public void addSongToPlayList(Playlist playlist) {
+    public void addSongToPlayList(String playlistTitle) {
 
         Map<String, Object> map = new HashMap<>(); //mapa de valores
         map.put("songId", bundle.getString("songId"));
 
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        String userId = firebaseAuth.getCurrentUser().getUid();
-        Query update = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("playlists").orderByChild("title").equalTo(playlist.getTitle());
+        Query update = FirebaseDatabase.getInstance().getReference().child("playlists").orderByChild("title").equalTo(playlistTitle);
         update.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot data : snapshot.getChildren()) {
                     data.getRef().child("songs").push().setValue(map); //al poner .child(songs) si no existe el nodo se crea automáticamente.
-                    Toast.makeText(context.getApplicationContext(), "Canción agregada a la lista " + playlist.getTitle(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context.getApplicationContext(), "Canción agregada a la lista " + playlistTitle, Toast.LENGTH_SHORT).show();
                 }
             }
 

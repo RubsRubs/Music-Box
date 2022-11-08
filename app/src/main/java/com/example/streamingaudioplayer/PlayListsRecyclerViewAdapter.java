@@ -91,11 +91,9 @@ public class PlayListsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
     public void delete(String playListTitle) {
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        String userId = firebaseAuth.getCurrentUser().getUid();
 
         //eliminamos por título ya que no puede haber dos iguales
-        Query delete = databaseReference.child("Users").child(userId).child("playlists").orderByChild("title").equalTo(playListTitle);
+        Query delete = databaseReference.child("playlists").orderByChild("title").equalTo(playListTitle);
 
         delete.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

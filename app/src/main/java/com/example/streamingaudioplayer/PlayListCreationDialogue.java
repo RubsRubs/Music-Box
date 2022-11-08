@@ -20,6 +20,7 @@ public class PlayListCreationDialogue extends AppCompatDialogFragment {
     EditText editTitle, editDescription;
     SwitchCompat switchCompat;
     private PlayListAddDialogueListener playListAddDialogueListener;
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -40,10 +41,8 @@ public class PlayListCreationDialogue extends AppCompatDialogFragment {
 
                 String title = editTitle.getText().toString();
                 String description = editDescription.getText().toString();
-                boolean publica = false;
-                if (switchCompat.isChecked()) {
-                    publica = true;
-                }
+                boolean publica = switchCompat.isChecked();
+
                 if (title.isEmpty()) {
                     Toast.makeText(getContext(), "El título es obligatorio", Toast.LENGTH_SHORT).show();
                 } else {

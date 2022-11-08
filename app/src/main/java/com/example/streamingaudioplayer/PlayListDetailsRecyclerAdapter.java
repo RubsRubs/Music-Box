@@ -134,10 +134,8 @@ public class PlayListDetailsRecyclerAdapter extends RecyclerView.Adapter<Recycle
 
     public void delete(String songId) {
 
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        String userId = firebaseAuth.getCurrentUser().getUid();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("Users").child(userId).child("playlists").orderByChild("title").equalTo(playlist.getTitle()).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("playlists").orderByChild("title").equalTo(playlist.getTitle()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
