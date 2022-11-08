@@ -12,8 +12,7 @@
         android:id="@+id/txtV_artist_activity_name_ID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginLeft="310dp"
         android:shadowColor="@color/black"
         android:shadowDx="0"
         android:shadowDy="0"
@@ -27,7 +26,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
         android:text="Recomendaciones"
         android:textColor="@color/white"
         android:textSize="20dp" />
@@ -35,8 +33,7 @@
     <com.smarteist.autoimageslider.SliderView
         android:id="@+id/sliderView_Recomendaciones_ID"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="220dp"
         app:sliderAnimationDuration="600"
         app:sliderAutoCycleDirection="right"
         app:sliderAutoCycleEnabled="true"
@@ -63,7 +60,6 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/comunity_plalists_recycler_view_ID"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

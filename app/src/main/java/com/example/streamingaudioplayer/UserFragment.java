@@ -91,5 +91,17 @@ public class UserFragment extends Fragment {
                 });
             }
         });
+
+        binding.userNamePencilID.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openDialog();
+            }
+        });
+    }
+
+    public void openDialog() {
+        EditProfileNameDialogue editProfileNameDialogue = new EditProfileNameDialogue();
+        editProfileNameDialogue.show(getParentFragmentManager(), "UserName");
     }
 }

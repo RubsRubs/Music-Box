@@ -19,10 +19,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
-public class NavigationActivity extends AppCompatActivity implements PlayListCreationDialogue.PlayListAddDialogueListener {
+public class NavigationActivity extends AppCompatActivity implements PlayListCreationDialogue.PlayListAddDialogueListener, EditProfileNameDialogue.ChangeProfileNameDialogueListener {
 
     ActivityNavigationBinding binding;
     BottomNavigationView bottomNavigationView;
@@ -110,6 +114,23 @@ public class NavigationActivity extends AppCompatActivity implements PlayListCre
             @Override
             public void onComplete(@NonNull Task<Void> task1) {
                 Toast.makeText(getApplicationContext(), "Playlist Creada", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void changeNameApplyText(String name) {
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        String id = firebaseAuth.getCurrentUser().getUid();
+
+        //String favouritesKey = databaseReference.child("Users").child("favourites").push().getKey();
+
+        databaseReference.child("Users").child(id).child("user").setValue(name).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Toast.makeText(NavigationActivity.this, "Nombre de usuario actualizado", Toast.LENGTH_SHORT).show();
             }
         });
     }
