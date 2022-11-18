@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.streamingaudioplayer.databinding.FragmentHomeBinding;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,7 +31,7 @@ public class HomeFragment extends Fragment {
     ArrayList<String> songIdsList;
     SliderAdapter sliderAdapter;
     RecyclerView recyclerView;
-    PlayListsRecyclerViewAdapter playListsRecyclerViewAdapter;
+    PublicPlayListsRecyclerAdapter publicPlayListsRecyclerAdapter;
     ArrayList<Playlist> playlists;
 
     public HomeFragment() {
@@ -116,10 +115,10 @@ public class HomeFragment extends Fragment {
                     playlists.add(playlist);
                 }
                 //importante crear un nuevo adaptador cada vez para que no se duplicquen los items en el RecyclerView
-                playListsRecyclerViewAdapter = new PlayListsRecyclerViewAdapter(getContext());
-                recyclerView.setAdapter(playListsRecyclerViewAdapter);
-                playListsRecyclerViewAdapter.setItems(playlists);
-                playListsRecyclerViewAdapter.notifyDataSetChanged();
+                publicPlayListsRecyclerAdapter = new PublicPlayListsRecyclerAdapter(getContext());
+                recyclerView.setAdapter(publicPlayListsRecyclerAdapter);
+                publicPlayListsRecyclerAdapter.setItems(playlists);
+                publicPlayListsRecyclerAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -128,3 +127,4 @@ public class HomeFragment extends Fragment {
         });
     }
 }
+

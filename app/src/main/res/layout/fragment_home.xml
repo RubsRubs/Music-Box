@@ -9,31 +9,20 @@
     tools:context=".HomeFragment">
 
     <TextView
-        android:id="@+id/txtV_artist_activity_name_ID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="310dp"
-        android:shadowColor="@color/black"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="0"
-        android:text="Inicio"
-        android:textColor="@color/white"
-        android:textSize="35dp"
-        android:textStyle="bold" />
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
         android:text="Recomendaciones"
         android:textColor="@color/white"
-        android:textSize="20dp" />
+        android:textSize="25dp"
+        android:textStyle="bold" />
 
     <com.smarteist.autoimageslider.SliderView
         android:id="@+id/sliderView_Recomendaciones_ID"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="215dp"
+        android:layout_marginTop="10dp"
         app:sliderAnimationDuration="600"
         app:sliderAutoCycleDirection="right"
         app:sliderAutoCycleEnabled="true"
@@ -51,15 +40,18 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
         android:text="Listas de la  comunidad"
         android:textColor="@color/white"
-        android:textSize="20dp" />
+        android:textSize="25dp"
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/comunity_plalists_recycler_view_ID"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#3C3A3A" />
 
 </LinearLayout>

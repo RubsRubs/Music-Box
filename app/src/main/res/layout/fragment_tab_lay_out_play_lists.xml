@@ -10,7 +10,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/playlists_fragment_recycler_view_ID"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="#3C3A3A" />
 
     <ImageView
         android:id="@+id/img_view_add_circle_ID"

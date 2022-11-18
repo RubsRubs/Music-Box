@@ -44,7 +44,7 @@
                 android:text="Album"
                 android:textColor="@color/white"
                 android:textSize="25dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/album_Activity__ArtistName_text_view_ID"
@@ -63,6 +63,7 @@
         android:id="@+id/album_Activity_listView_ID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:background="#3C3A3A" />
 
 </LinearLayout>

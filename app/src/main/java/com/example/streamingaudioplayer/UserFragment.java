@@ -97,8 +97,8 @@ public class UserFragment extends Fragment {
         binding.textVUserNameID.setText(user.getUser());
         binding.textVEmailID.setText(user.getEmail());
 
+        //si pongo getContext() en vez de getActivity me da un error
         if (user.profileImgURL != null && getActivity() != null) {
-            //si pongo getContext() en vez de getActivity me da un error
             Glide.with(getActivity()).load(user.getProfileImgURL()).fitCenter().into(binding.imgvAvatarID);
         }
     }
