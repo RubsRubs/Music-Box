@@ -6,10 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
 
 public class PublicPlayListsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -46,7 +44,7 @@ public class PublicPlayListsRecyclerAdapter extends RecyclerView.Adapter<Recycle
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("playList", playlist);
-                Intent intent = new Intent(context, PlayListDetailsActivity.class);
+                Intent intent = new Intent(context, PublicPlaylistDetailsActivity.class);
                 intent.putExtras(bundle);
                 context.startActivity(intent);
             }

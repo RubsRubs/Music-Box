@@ -28,6 +28,10 @@ public class Playlist implements Serializable {
         return description;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
     public boolean isPublica() {
         return publica;
     }

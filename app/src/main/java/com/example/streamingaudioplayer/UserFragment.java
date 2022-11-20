@@ -77,7 +77,7 @@ public class UserFragment extends Fragment {
 
     public void retreiveUserData() {
 
-        databaseReference.child("Users").orderByChild("email").equalTo(firebaseAuth.getCurrentUser().getEmail()).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Users").orderByKey().equalTo(firebaseAuth.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
