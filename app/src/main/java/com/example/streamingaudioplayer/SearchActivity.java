@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -14,8 +15,10 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.streamingaudioplayer.databinding.ActivitySearchBinding;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +26,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SearchActivity extends AppCompatActivity implements Filterable {
 
@@ -34,6 +40,8 @@ public class SearchActivity extends AppCompatActivity implements Filterable {
     int queryCombination;
     int albumPosition;
     int songPosition;
+    ArrayList<String> easterEggStrings;
+    int contador = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +78,8 @@ public class SearchActivity extends AppCompatActivity implements Filterable {
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String s) {
+            public boolean onQueryTextSubmit(String charSequence) {
+                easterEggFilter(charSequence);
                 return false;
             }
 
@@ -154,4 +163,81 @@ public class SearchActivity extends AppCompatActivity implements Filterable {
             searchViewAdapter.notifyDataSetChanged(); //notificamos los cambios realizados
         }
     };
+
+    public void easterEggFilter(String charSequence) {
+
+        if (contador == 0) {
+            easterEggStrings = new ArrayList<>();
+            easterEggStrings.add("regeton");
+            easterEggStrings.add("reggetton");
+            easterEggStrings.add("reaggeton");
+            easterEggStrings.add("reaggetton");
+            easterEggStrings.add("reageton");
+            easterEggStrings.add("regueton");
+            easterEggStrings.add("reguetton");
+            easterEggStrings.add("trap");
+            easterEggStrings.add("daddy yankee");
+            easterEggStrings.add("dady yanke");
+            easterEggStrings.add("dady yankee");
+            easterEggStrings.add("dadyy yanke");
+            easterEggStrings.add("dady yanki");
+            easterEggStrings.add("bad bunny");
+            easterEggStrings.add("bad buny");
+            easterEggStrings.add("papi chulo");
+            easterEggStrings.add("pit bull");
+            easterEggStrings.add("don omar");
+            easterEggStrings.add("mas gasolina");
+            easterEggStrings.add("electro latino");
+            easterEggStrings.add("paquirrin");
+            easterEggStrings.add("Bertin Osborne");
+        }
+
+        for (String string : easterEggStrings) {
+
+            if (charSequence.toLowerCase().trim().contains(string.toLowerCase().trim())) {
+                if (contador == 0) {
+                    Toast.makeText(SearchActivity.this, "Error, inténtalo de nuevo", Toast.LENGTH_SHORT).show();
+                    contador++;
+
+                } else if (contador == 1) {
+                    Toast.makeText(SearchActivity.this, "Creo que te has equivocado", Toast.LENGTH_SHORT).show();
+                    contador++;
+
+                } else if (contador == 2) {
+                    Toast.makeText(SearchActivity.this, "Me refiero a que te has equivocado de aplicación", Toast.LENGTH_SHORT).show();
+                    contador++;
+
+                } else if (contador == 3) {
+                    Toast.makeText(SearchActivity.this, "¿En serio?, parece que te gusta jugar, ¿no?", Toast.LENGTH_SHORT).show();
+                    contador++;
+
+                } else if (contador == 4) {
+                    Toast.makeText(SearchActivity.this, "No lo vuelvas a intentar", Toast.LENGTH_SHORT).show();
+                    contador++;
+
+                } else if (contador == 5) {
+                    Toast.makeText(SearchActivity.this, "Te lo he advertido, adiós", Toast.LENGTH_SHORT).show();
+                    contador++;
+                    logOut();
+                }
+            }
+        }
+    }
+
+    public void logOut() {
+
+        binding.easterEggProgressCircularID.setVisibility(View.VISIBLE);
+
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        };
+        Timer timer = new Timer();
+        timer.schedule(timerTask, 3000);
+    }
 }
