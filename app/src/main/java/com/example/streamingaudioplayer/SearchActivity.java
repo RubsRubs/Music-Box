@@ -169,12 +169,18 @@ public class SearchActivity extends AppCompatActivity implements Filterable {
         if (contador == 0) {
             easterEggStrings = new ArrayList<>();
             easterEggStrings.add("regeton");
-            easterEggStrings.add("reggetton");
+            easterEggStrings.add("reggeton");
+            easterEggStrings.add("regetton");
+            easterEggStrings.add("reagueton");
+            easterEggStrings.add("regetton");
+            easterEggStrings.add("reaguetton");
             easterEggStrings.add("reaggeton");
             easterEggStrings.add("reaggetton");
             easterEggStrings.add("reageton");
             easterEggStrings.add("regueton");
             easterEggStrings.add("reguetton");
+            easterEggStrings.add("perreo");
+            easterEggStrings.add("twerking");
             easterEggStrings.add("trap");
             easterEggStrings.add("daddy yankee");
             easterEggStrings.add("dady yanke");
