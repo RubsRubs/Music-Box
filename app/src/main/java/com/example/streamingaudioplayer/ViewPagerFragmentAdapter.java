@@ -9,7 +9,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 public class ViewPagerFragmentAdapter extends FragmentStateAdapter {
 
-    private String[] titles = new String[]{"Álbumes", "Biografía"};
+    private String[] titles = new String[]{"1", "2"};
     Artist artist;
 
     public ViewPagerFragmentAdapter(@NonNull FragmentActivity fragmentActivity, Artist artist) {

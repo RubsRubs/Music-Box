@@ -47,14 +47,23 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/album_activity_album_year_text_view_ID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="Year"
+                android:textColor="@color/white"
+                android:textSize="17dp" />
+
+            <TextView
                 android:id="@+id/album_Activity__ArtistName_text_view_ID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:text="Artist"
                 android:textColor="@color/white"
-                android:textSize="17dp" />
+                android:textSize="20dp" />
         </LinearLayout>
 
     </LinearLayout>

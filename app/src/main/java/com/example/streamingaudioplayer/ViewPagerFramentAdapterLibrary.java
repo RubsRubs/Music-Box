@@ -7,7 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 public class ViewPagerFramentAdapterLibrary extends FragmentStateAdapter {
 
-    private String[] titles = new String[]{"Listas", "Favoritos", "Historial"};
+    private String[] titles = new String[]{"1", "2", "3"};
 
     public ViewPagerFramentAdapterLibrary(@NonNull LibraryFragment libraryFragment) {
         super(libraryFragment);

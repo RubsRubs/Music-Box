@@ -219,7 +219,6 @@ public class SearchActivity extends AppCompatActivity implements Filterable {
 
                 } else if (contador == 5) {
                     Toast.makeText(SearchActivity.this, "Has agotado mi paciencia, adiós", Toast.LENGTH_SHORT).show();
-                    contador++;
                     logOut();
                 }
             }

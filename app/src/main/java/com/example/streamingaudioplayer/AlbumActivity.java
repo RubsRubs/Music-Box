@@ -51,6 +51,7 @@ public class AlbumActivity extends AppCompatActivity {
     public void loadLayOutData() {
         binding.albumActivityAlbumNameTextViewID.setText(artist.getAlbums().get(albumPosition).getAlbumTitle());
         binding.albumActivityArtistNameTextViewID.setText(artist.getName());
+        binding.albumActivityAlbumYearTextViewID.setText(artist.getAlbums().get(albumPosition).getYear());
         Glide.with(getApplicationContext()).load(artist.getAlbums().get(albumPosition).getImgURL()).into(binding.albumActivityImgViewID);
     }
 

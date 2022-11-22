@@ -20,7 +20,7 @@ public class ArtistActivity extends AppCompatActivity {
 
     ActivityArtistBinding binding;
     Artist artist;
-    private String[] titles = new String[]{"Álbumes", "Biografía"};
+    private String[] titles = new String[]{"Álbumes", "Información"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
