@@ -168,45 +168,41 @@ public class SearchActivity extends AppCompatActivity implements Filterable {
 
         if (contador == 0) {
             easterEggStrings = new ArrayList<>();
+
             easterEggStrings.add("regeton");
+            easterEggStrings.add("reggetton");
+            easterEggStrings.add("regetton");
             easterEggStrings.add("reggeton");
-            easterEggStrings.add("regetton");
+
             easterEggStrings.add("reagueton");
-            easterEggStrings.add("regetton");
+            easterEggStrings.add("reagguetton");
             easterEggStrings.add("reaguetton");
-            easterEggStrings.add("reaggeton");
-            easterEggStrings.add("reaggetton");
+            easterEggStrings.add("reaggueton");
+
             easterEggStrings.add("reageton");
+            easterEggStrings.add("reaggetton");
+            easterEggStrings.add("reagetton");
+            easterEggStrings.add("reaggeton");
+
             easterEggStrings.add("regueton");
+            easterEggStrings.add("regguetton");
             easterEggStrings.add("reguetton");
+            easterEggStrings.add("reggueton");
+
             easterEggStrings.add("perreo");
-            easterEggStrings.add("twerking");
-            easterEggStrings.add("trap");
-            easterEggStrings.add("daddy yankee");
-            easterEggStrings.add("dady yanke");
-            easterEggStrings.add("dady yankee");
-            easterEggStrings.add("dadyy yanke");
-            easterEggStrings.add("dady yanki");
-            easterEggStrings.add("bad bunny");
-            easterEggStrings.add("bad buny");
-            easterEggStrings.add("papi chulo");
-            easterEggStrings.add("pit bull");
-            easterEggStrings.add("don omar");
-            easterEggStrings.add("mas gasolina");
-            easterEggStrings.add("electro latino");
-            easterEggStrings.add("paquirrin");
             easterEggStrings.add("Bertin Osborne");
         }
 
         for (String string : easterEggStrings) {
 
             if (charSequence.toLowerCase().trim().contains(string.toLowerCase().trim())) {
+
                 if (contador == 0) {
                     Toast.makeText(SearchActivity.this, "Error, inténtalo de nuevo", Toast.LENGTH_SHORT).show();
                     contador++;
 
                 } else if (contador == 1) {
-                    Toast.makeText(SearchActivity.this, "Creo que te has equivocado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchActivity.this, "Mmm...creo que te has equivocado", Toast.LENGTH_SHORT).show();
                     contador++;
 
                 } else if (contador == 2) {
@@ -214,15 +210,15 @@ public class SearchActivity extends AppCompatActivity implements Filterable {
                     contador++;
 
                 } else if (contador == 3) {
-                    Toast.makeText(SearchActivity.this, "¿En serio?, parece que te gusta jugar, ¿no?", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchActivity.this, "Por favor no insistas", Toast.LENGTH_SHORT).show();
                     contador++;
 
                 } else if (contador == 4) {
-                    Toast.makeText(SearchActivity.this, "No lo vuelvas a intentar", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchActivity.this, "¿En serio?, parece que te gusta jugar, ¿no?", Toast.LENGTH_SHORT).show();
                     contador++;
 
                 } else if (contador == 5) {
-                    Toast.makeText(SearchActivity.this, "Te lo he advertido, adiós", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchActivity.this, "Has agotado mi paciencia, adiós", Toast.LENGTH_SHORT).show();
                     contador++;
                     logOut();
                 }
