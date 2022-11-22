@@ -24,6 +24,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
@@ -40,6 +41,7 @@ public class PlayerActivity extends AppCompatActivity {
     Artist actualArtist;
     Album actualAlbum;
     Song actualSong;
+    boolean favourited;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,7 @@ public class PlayerActivity extends AppCompatActivity {
         songIdPosition = bundle.getInt("songIdPosition");
         songId = songIdsList.get(songIdPosition);
 
+        favourited = false;
         retreiveDataFromDataBase();
     }
 
@@ -113,6 +116,7 @@ public class PlayerActivity extends AppCompatActivity {
         binding.txtVArtistaID.setText(actualArtist.getName());
         binding.txtVSongID.setText(actualSong.getSongTitle());
         binding.txtVTotalTimeID.setText(actualSong.getDuration());
+        checkIfFavourited();
     }
 
     private void play(View view) {
@@ -191,6 +195,31 @@ public class PlayerActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), ArtistActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);// addFlags para que no me de error al pasar a la nueva activity
                 intent.putExtras(bundle);
                 startActivity(intent);
+            }
+        });
+
+        binding.txtVArtistaID.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("artist", actualArtist);
+                Intent intent = new Intent(getApplicationContext(), ArtistActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
+        binding.imgVFavouritedID.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (!favourited) {
+                    addToFavourites();
+                    binding.imgVFavouritedID.setImageResource(R.drawable.ic_baseline_favorite_on);
+                } else {
+                    deleteFromFavourites(Double.toString(actualSong.getSongId()));
+                    binding.imgVFavouritedID.setImageResource(R.drawable.ic_baseline_favorite_off);
+                }
             }
         });
     }
@@ -301,6 +330,74 @@ public class PlayerActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task1) {
 
+            }
+        });
+    }
+
+    public void checkIfFavourited() {
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(); //este objeto hace referencia al nodo principal de la bd en real-time
+        String userId = auth.getCurrentUser().getUid();
+
+        databaseReference.child("Users").child(userId).child("favourites").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    SongIDModel songIDModel = data.getValue(SongIDModel.class);
+
+                    if (Double.toString(actualSong.getSongId()).equals(songIDModel.getSongId())) {
+                        binding.imgVFavouritedID.setImageResource(R.drawable.ic_baseline_favorite_on);
+                        favourited = true;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
+
+    private void addToFavourites() {
+
+        String songId = Double.toString(actualSong.getSongId());
+        SongIDModel songIdModel = new SongIDModel(songId);
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(); //este objeto hace referencia al nodo principal de la bd en real-time
+        String userId = auth.getCurrentUser().getUid(); //obtenemos el id del usuario recién registrado para después utilizarlo para generar su mapa de valores correspondiente.
+
+        //String favouritesKey = databaseReference.child("Users").child("favourites").push().getKey();
+
+        databaseReference.child("Users").child(userId).child("favourites").push().setValue(songIdModel).addOnCompleteListener(new OnCompleteListener<Void>() { //.child crea un nuevo nodo
+            @Override
+            public void onComplete(@NonNull Task<Void> task1) {
+                Toast.makeText(getApplicationContext(), "Canción agregada a favoritos", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void deleteFromFavourites(String songId) {
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        String userId = firebaseAuth.getCurrentUser().getUid();
+
+        Query delete = databaseReference.child("Users").child(userId).child("favourites").orderByChild("songId").equalTo(songId);
+
+        delete.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                songIdsList.clear(); // importante limpiar la lista cada vez que se elimina un item para que no se dupliquen en la parte de abajo...
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    data.getRef().removeValue();
+                    Toast.makeText(getApplicationContext(), "Canción eliminada de favoritos", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
             }
         });
     }

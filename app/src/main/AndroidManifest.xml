@@ -36,13 +36,13 @@
             android:name=".PlayerActivity"
             android:exported="true" />
         <activity
-            android:name=".NavigationActivity"
+            android:name=".SplashScreen"
             android:exported="true" />
         <activity
             android:name=".SignUpActivity"
             android:exported="true" />
         <activity
-            android:name=".SplashScreen"
+            android:name=".NavigationActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
