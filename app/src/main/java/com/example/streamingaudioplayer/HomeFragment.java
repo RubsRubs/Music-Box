@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.streamingaudioplayer.databinding.FragmentHomeBinding;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,10 +30,12 @@ public class HomeFragment extends Fragment {
     FragmentHomeBinding binding;
     SliderView sliderView1;
     ArrayList<String> songIdsList;
+    ArrayList<String> historyIds;
     SliderAdapter sliderAdapter;
     RecyclerView recyclerView;
     PublicPlayListsRecyclerAdapter publicPlayListsRecyclerAdapter;
     ArrayList<Playlist> playlists;
+    String genre;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -55,7 +58,8 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager manager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
 
-        loadRecomendacionesSlidersData();
+        historyIds = new ArrayList<>();
+        checkHistory();
 
         playlists = new ArrayList<>();
         loadPlaylistsData();
@@ -68,7 +72,7 @@ public class HomeFragment extends Fragment {
         super.onResume();
     }
 
-    public void loadRecomendacionesSlidersData() {
+    public void loadRandomSlider() {
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -101,6 +105,38 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    public void loadBasedOnHistory() {
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        databaseReference.child("artists").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Artist artist = dataSnapshot.getValue(Artist.class);
+
+                    ArrayList<Album> albums = artist.getAlbums();
+                    for (Album album : albums) {
+
+                        ArrayList<Song> songs = album.getSongs();
+                        for (Song song : songs) {
+                            if (Double.toString(song.getSongId()).equals(historyIds.get(historyIds.size() - 1))) {
+                                genre = album.getGenre();
+                            }
+                        }
+                    }
+                }
+                loadRecommendedGenreSlider();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     public void loadPlaylistsData() {
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -123,6 +159,70 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
+
+    public void checkHistory() {
+
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        String userId = firebaseAuth.getCurrentUser().getUid();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        databaseReference.child("Users").child(userId).child("history").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    SongIDModel songIDModel = data.getValue(SongIDModel.class);
+                    historyIds.add(songIDModel.getSongId());
+                }
+                //importante llamar a este método dentro del onDataChange para esperar a que acabe de rellenar la lista, de lo contrario la lista estará vacía ya que las respuestas del Firebase van más lentas que la ejecución del código  (asynchronous behavior of the onDataChange(), se ejecuta en segundo plano mientras se ejecuta el resto del código)
+                if (historyIds.isEmpty()) {
+                    loadRandomSlider();
+                } else {
+                    loadBasedOnHistory();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
+
+    public void loadRecommendedGenreSlider() {
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        databaseReference.child("artists").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                songIdsList = new ArrayList<>();
+
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Artist artist = dataSnapshot.getValue(Artist.class);
+
+                    ArrayList<Album> albums = artist.getAlbums();
+                    for (Album album : albums) {
+
+                        if (album.getGenre().equals(genre)) {
+
+                            ArrayList<Song> songs = album.getSongs();
+
+                            int random = (int) (Math.random() * 3 + 1);
+                            songIdsList.add(Double.toString(songs.get(random).getSongId()));
+                            sliderAdapter = new SliderAdapter(getContext(), songIdsList); //al utilizar el adaptador con sliderView hay que crear un nuevo objeto adaptador cada vez que se cogen los datos de firebase, ya que al ser un slider se cargan los objetos uno a uno en pantalla, al contrario que el RecyclerView que carga todos a la vez en una lista y con solo decalarar el objeto adaptador una vez y meterle el arraylist como argumento es suficiente.
+                            sliderView1.setSliderAdapter(sliderAdapter);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }

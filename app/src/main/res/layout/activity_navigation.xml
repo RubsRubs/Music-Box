@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/tab_indicator"
+        android:background="#252424"
         app:itemIconTint="@color/bottom_navigation_icon_colors"
         app:itemTextColor="@color/bottom_navigation_icon_colors"
         app:menu="@menu/bottom_navigation_menu" />
