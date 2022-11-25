@@ -53,7 +53,7 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         String songId = songIdsList.get(position);
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("artists").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Artists").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 

@@ -76,7 +76,7 @@ public class HomeFragment extends Fragment {
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        databaseReference.child("artists").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Artists").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -109,7 +109,7 @@ public class HomeFragment extends Fragment {
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        databaseReference.child("artists").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Artists").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -141,7 +141,7 @@ public class HomeFragment extends Fragment {
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        databaseReference.child("playlists").orderByChild("publica").equalTo(true).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Playlists").orderByChild("publica").equalTo(true).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -195,7 +195,7 @@ public class HomeFragment extends Fragment {
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        databaseReference.child("artists").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Artists").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 

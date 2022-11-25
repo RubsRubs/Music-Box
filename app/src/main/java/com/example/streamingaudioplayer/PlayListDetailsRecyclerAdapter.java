@@ -55,7 +55,7 @@ public class PlayListDetailsRecyclerAdapter extends RecyclerView.Adapter<Recycle
         String songId = songIdsList.get(position);
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("artists").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Artists").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -135,7 +135,7 @@ public class PlayListDetailsRecyclerAdapter extends RecyclerView.Adapter<Recycle
     public void delete(String songId) {
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("playlists").orderByChild("title").equalTo(playlist.getTitle()).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Playlists").orderByChild("title").equalTo(playlist.getTitle()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 

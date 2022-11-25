@@ -43,7 +43,7 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderViewHol
         String songId = list.get(position);
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("artists").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Artists").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 

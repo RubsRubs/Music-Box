@@ -75,7 +75,7 @@ public class AddToPlayListRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
         Map<String, Object> map = new HashMap<>(); //mapa de valores
         map.put("songId", bundle.getString("songId"));
 
-        Query update = FirebaseDatabase.getInstance().getReference().child("playlists").orderByChild("title").equalTo(playlistTitle);
+        Query update = FirebaseDatabase.getInstance().getReference().child("Playlists").orderByChild("title").equalTo(playlistTitle);
         update.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

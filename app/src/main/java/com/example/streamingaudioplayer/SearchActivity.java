@@ -108,7 +108,7 @@ public class SearchActivity extends AppCompatActivity implements Filterable {
 
                 fileredList = new ArrayList<>();
 
-                dbr.child("artists").addValueEventListener(new ValueEventListener() {
+                dbr.child("Artists").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -173,6 +173,11 @@ public class SearchActivity extends AppCompatActivity implements Filterable {
             easterEggStrings.add("reggetton");
             easterEggStrings.add("regetton");
             easterEggStrings.add("reggeton");
+
+            easterEggStrings.add("regueaton");
+            easterEggStrings.add("reggueatton");
+            easterEggStrings.add("regueatton");
+            easterEggStrings.add("reggueaton");
 
             easterEggStrings.add("reagueton");
             easterEggStrings.add("reagguetton");

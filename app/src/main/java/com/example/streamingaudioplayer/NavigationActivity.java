@@ -110,7 +110,7 @@ public class NavigationActivity extends AppCompatActivity implements PlayListCre
 
         //String favouritesKey = databaseReference.child("Users").child("favourites").push().getKey();
 
-        databaseReference.child("playlists").push().setValue(playlist).addOnCompleteListener(new OnCompleteListener<Void>() { //.child crea un nuevo nodo
+        databaseReference.child("Playlists").push().setValue(playlist).addOnCompleteListener(new OnCompleteListener<Void>() { //.child crea un nuevo nodo
             @Override
             public void onComplete(@NonNull Task<Void> task1) {
                 Toast.makeText(getApplicationContext(), "Playlist Creada", Toast.LENGTH_SHORT).show();

@@ -86,7 +86,7 @@ public class PublicPlaylistDetailsActivity extends AppCompatActivity {
 
     public void getSongIds() {
 
-        databaseReference.child("playlists").orderByChild("title").equalTo(playlist.getTitle()).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Playlists").orderByChild("title").equalTo(playlist.getTitle()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
