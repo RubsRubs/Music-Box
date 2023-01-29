@@ -32,8 +32,6 @@ public class AlbumsListViewAdapter extends ArrayAdapter {
         albumTxtView.setText(album.getAlbumTitle());
 
         return convertView;
-
-
     }
 }
 

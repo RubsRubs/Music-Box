@@ -6,8 +6,9 @@
     tools:context=".TabLayOutAlbumsFragment">
 
     <ListView
+        android:id="@+id/albumsListViewID"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/albumsListViewID" />
+        android:layout_height="wrap_content"
+        android:background="#3C3A3A" />
 
 </FrameLayout>

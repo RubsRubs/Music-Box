@@ -6,17 +6,17 @@ public class Song implements Serializable {
     private String duration;
     private String fileURL;
     private String songTitle;
-    private double idNumber; //si utilizo un String el objeto me devuelve un valor null y no entiendo bien porqué---
+    private double songId; //si utilizo un String el objeto me devuelve un valor null y no entiendo bien porqué---
 
     public Song() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public Song(String duration, String fileURL, String songTitle, double idNumber) {
+    public Song(String duration, String fileURL, String songTitle, double songId) {
         this.duration = duration;
         this.fileURL = fileURL;
         this.songTitle = songTitle;
-        this.idNumber = idNumber;
+        this.songId = songId;
     }
 
     public String getDuration() {
@@ -31,7 +31,7 @@ public class Song implements Serializable {
         return songTitle;
     }
 
-    public double getIdNumber() {
-        return idNumber;
+    public double getSongId() {
+        return songId;
     }
 }

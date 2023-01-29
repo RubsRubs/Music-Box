@@ -2,17 +2,23 @@ package com.example.streamingaudioplayer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.streamingaudioplayer.databinding.ActivitySearchBinding;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,6 +26,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SearchActivity extends AppCompatActivity implements Filterable {
 
@@ -31,6 +40,8 @@ public class SearchActivity extends AppCompatActivity implements Filterable {
     int queryCombination;
     int albumPosition;
     int songPosition;
+    ArrayList<String> easterEggStrings;
+    int contador = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +52,12 @@ public class SearchActivity extends AppCompatActivity implements Filterable {
         setContentView(view);
 
         getSupportActionBar().hide(); //escondemos la action bar
+
+        //cambiamos el color de la status bar
+        Window window = SearchActivity.this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(ContextCompat.getColor(SearchActivity.this, R.color.black));
 
         searchView = binding.searhViewID;
         searchView.setIconified(false); //desiconificamos la lupa para poder hacer focus en el searchview y poder abrir el teclado automáticamente al iniciar la activity
@@ -61,7 +78,8 @@ public class SearchActivity extends AppCompatActivity implements Filterable {
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String s) {
+            public boolean onQueryTextSubmit(String charSequence) {
+                easterEggFilter(charSequence);
                 return false;
             }
 
@@ -82,7 +100,6 @@ public class SearchActivity extends AppCompatActivity implements Filterable {
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
 
-
             if (charSequence == null || charSequence.length() == 0) {
                 fileredList.clear(); //si no existe ningún patrón limpiamos y vaciamos la lista
             } else {
@@ -91,7 +108,7 @@ public class SearchActivity extends AppCompatActivity implements Filterable {
 
                 fileredList = new ArrayList<>();
 
-                dbr.child("artists").addValueEventListener(new ValueEventListener() {
+                dbr.child("Artists").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -146,4 +163,87 @@ public class SearchActivity extends AppCompatActivity implements Filterable {
             searchViewAdapter.notifyDataSetChanged(); //notificamos los cambios realizados
         }
     };
+
+    public void easterEggFilter(String charSequence) {
+
+        if (contador == 0) {
+            easterEggStrings = new ArrayList<>();
+
+            easterEggStrings.add("regeton");
+            easterEggStrings.add("reggetton");
+            easterEggStrings.add("regetton");
+            easterEggStrings.add("reggeton");
+
+            easterEggStrings.add("regueaton");
+            easterEggStrings.add("reggueatton");
+            easterEggStrings.add("regueatton");
+            easterEggStrings.add("reggueaton");
+
+            easterEggStrings.add("reagueton");
+            easterEggStrings.add("reagguetton");
+            easterEggStrings.add("reaguetton");
+            easterEggStrings.add("reaggueton");
+
+            easterEggStrings.add("reageton");
+            easterEggStrings.add("reaggetton");
+            easterEggStrings.add("reagetton");
+            easterEggStrings.add("reaggeton");
+
+            easterEggStrings.add("regueton");
+            easterEggStrings.add("regguetton");
+            easterEggStrings.add("reguetton");
+            easterEggStrings.add("reggueton");
+
+            easterEggStrings.add("perreo");
+            easterEggStrings.add("Bertin Osborne");
+        }
+
+        for (String string : easterEggStrings) {
+
+            if (charSequence.toLowerCase().trim().contains(string.toLowerCase().trim())) {
+
+                if (contador == 0) {
+                    Toast.makeText(SearchActivity.this, "Error, inténtalo de nuevo", Toast.LENGTH_SHORT).show();
+                    contador++;
+
+                } else if (contador == 1) {
+                    Toast.makeText(SearchActivity.this, "Mmm...creo que te has equivocado", Toast.LENGTH_SHORT).show();
+                    contador++;
+
+                } else if (contador == 2) {
+                    Toast.makeText(SearchActivity.this, "Me refiero a que te has equivocado de aplicación", Toast.LENGTH_SHORT).show();
+                    contador++;
+
+                } else if (contador == 3) {
+                    Toast.makeText(SearchActivity.this, "Por favor no insistas", Toast.LENGTH_SHORT).show();
+                    contador++;
+
+                } else if (contador == 4) {
+                    Toast.makeText(SearchActivity.this, "¿En serio?, parece que te gusta jugar, ¿no?", Toast.LENGTH_SHORT).show();
+                    contador++;
+
+                } else if (contador == 5) {
+                    Toast.makeText(SearchActivity.this, "Has agotado mi paciencia, adiós", Toast.LENGTH_SHORT).show();
+                    logOut();
+                }
+            }
+        }
+    }
+
+    public void logOut() {
+
+        binding.easterEggProgressCircularID.setVisibility(View.VISIBLE);
+
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        };
+        Timer timer = new Timer();
+        timer.schedule(timerTask, 3000);
+    }
 }

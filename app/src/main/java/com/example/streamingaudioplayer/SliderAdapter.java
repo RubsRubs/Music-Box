@@ -9,7 +9,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 
 import java.util.ArrayList;
@@ -17,11 +24,11 @@ import java.util.ArrayList;
 public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderViewHolder> {
 
     private Context context;
-    ArrayList<AudioFileModel> mAudioFileSliderModels;
+    ArrayList<String> list;
 
-    public SliderAdapter(Context context, ArrayList<AudioFileModel> audioFileSliderModels) {
+    public SliderAdapter(Context context, ArrayList<String> songIdsList) {
         this.context = context;
-        this.mAudioFileSliderModels = audioFileSliderModels;
+        this.list = songIdsList;
     }
 
     @Override
@@ -31,22 +38,51 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderViewHol
     }
 
     @Override
-    public void onBindViewHolder(SliderViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(SliderViewHolder sliderViewHolder, final int position) {
 
-        AudioFileModel audioFileSliderModelItem = mAudioFileSliderModels.get(position);
+        String songId = list.get(position);
 
-        Glide.with(viewHolder.itemView).load(audioFileSliderModelItem.getImgURL()).fitCenter().into(viewHolder.imgViewCover);
-        viewHolder.txtViewArtist.setText(audioFileSliderModelItem.getArtist());
-        viewHolder.txtViewTitle.setText(audioFileSliderModelItem.getSongTitle());
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("Artists").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Artist artist = dataSnapshot.getValue(Artist.class);
+
+                    ArrayList<Album> albums = artist.getAlbums();
+
+                    for (Album album : albums) {
+
+                        ArrayList<Song> songs = album.getSongs();
+
+                        for (Song song : songs) {
+
+                            for (int i = 0; i < list.size(); i++) {
+
+                                if (Double.toString(song.getSongId()).equals(songId)) {
+                                    Glide.with(sliderViewHolder.itemView).load(album.getImgURL()).fitCenter().into(sliderViewHolder.imgViewCover);
+                                    sliderViewHolder.txtViewArtist.setText(artist.getName());
+                                    sliderViewHolder.txtViewSongName.setText(song.getSongTitle());
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        sliderViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-               /* ArrayList<AudioFileModel> sliderList = new ArrayList<>();
-                sliderList.add(audioFileSliderModelItem); //creamos un array de una sola posición para repdroducir una única canción en el reproductor y lo pasamos con el bundle...
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("sliderPlayList", sliderList);
+                bundle.putInt("songIdPosition", position);
+                bundle.putSerializable("songIdsList", list);
                 Intent intent = new Intent(context, PlayerActivity.class);
                 intent.putExtras(bundle);
                 context.startActivity(intent); //me obliga a poner context delante del método startActivity(intent)...*/
@@ -56,7 +92,7 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderViewHol
 
     @Override
     public int getCount() {
-        return mAudioFileSliderModels.size();
+        return list.size();
     }
 
 // VIEW_HOLDER ----------------------------------VIEW_HOLDER---------------------------------------- VIEW_HOLDER
@@ -64,13 +100,13 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderViewHol
     public class SliderViewHolder extends SliderViewAdapter.ViewHolder {
 
         ImageView imgViewCover;
-        TextView txtViewArtist, txtViewTitle;
+        TextView txtViewArtist, txtViewSongName;
 
         public SliderViewHolder(View itemView) {
             super(itemView);
             imgViewCover = itemView.findViewById(R.id.imgView_Cover_ID);
             txtViewArtist = itemView.findViewById(R.id.slider_item_txt_artist_ID);
-            txtViewTitle = itemView.findViewById(R.id.slider_item_txt_title_ID);
+            txtViewSongName = itemView.findViewById(R.id.slider_item_txt_song_name_ID);
         }
     }
 }

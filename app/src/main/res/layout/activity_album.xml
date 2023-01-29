@@ -17,7 +17,7 @@
         android:layout_marginBottom="5dp"
         android:src="@drawable/ic_baseline_search" />
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/black"
@@ -43,17 +43,27 @@
                 android:layout_marginTop="15dp"
                 android:text="Album"
                 android:textColor="@color/white"
-                android:textSize="25dp" />
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/album_activity_album_year_text_view_ID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="Year"
+                android:textColor="@color/white"
+                android:textSize="17dp" />
 
             <TextView
                 android:id="@+id/album_Activity__ArtistName_text_view_ID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:text="Artist"
                 android:textColor="@color/white"
-                android:textSize="17dp" />
+                android:textSize="20dp" />
         </LinearLayout>
 
     </LinearLayout>
@@ -62,6 +72,7 @@
         android:id="@+id/album_Activity_listView_ID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:background="#3C3A3A" />
 
 </LinearLayout>

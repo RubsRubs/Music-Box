@@ -2,6 +2,7 @@ package com.example.streamingaudioplayer;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,25 +13,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class AlbumSongsListViewAdapter extends ArrayAdapter {
 
+    Context context;
+
     public AlbumSongsListViewAdapter(Context context, int resource, ArrayList<Song> songs) {
         super(context, resource, songs);
+        this.context = context;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -63,7 +63,12 @@ public class AlbumSongsListViewAdapter extends ArrayAdapter {
                     switch (menuItem.getItemId()) {
 
                         case R.id.agregar_a_lista_ID: {
-
+                            String songId = Double.toString(song.getSongId());
+                            Bundle bundle = new Bundle();
+                            bundle.putString("songId", songId);
+                            Intent intent = new Intent(context, AddToPlayListActivityListView.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);// addFlags para que no me de error al pasar a la nueva activity
+                            intent.putExtras(bundle);
+                            context.startActivity(intent);
                             break;
                         }
                         case R.id.agregar_a_favoritos_ID: {
@@ -76,8 +81,8 @@ public class AlbumSongsListViewAdapter extends ArrayAdapter {
 
             private void addToFavourites() {
 
-                String idNumber = Double.toString(song.getIdNumber());
-                Favourite favourite = new Favourite(idNumber);
+                String songId = Double.toString(song.getSongId());
+                SongIDModel songIdModel = new SongIDModel(songId);
 
                 FirebaseAuth auth = FirebaseAuth.getInstance();
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(); //este objeto hace referencia al nodo principal de la bd en real-time
@@ -85,7 +90,7 @@ public class AlbumSongsListViewAdapter extends ArrayAdapter {
 
                 //String favouritesKey = databaseReference.child("Users").child("favourites").push().getKey();
 
-                databaseReference.child("Users").child(userId).child("favourites").push().setValue(favourite).addOnCompleteListener(new OnCompleteListener<Void>() { //.child crea un nuevo nodo
+                databaseReference.child("Users").child(userId).child("favourites").push().setValue(songIdModel).addOnCompleteListener(new OnCompleteListener<Void>() { //.child crea un nuevo nodo
                     @Override
                     public void onComplete(@NonNull Task<Void> task1) {
                         Toast.makeText(getContext(), "Canción agregada a favoritos", Toast.LENGTH_SHORT).show();

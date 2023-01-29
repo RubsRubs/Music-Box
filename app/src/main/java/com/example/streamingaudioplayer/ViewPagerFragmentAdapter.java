@@ -9,7 +9,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 public class ViewPagerFragmentAdapter extends FragmentStateAdapter {
 
-    private String[] titles = new String[]{"Álbumes", "Biografía"};
+    private String[] titles = new String[]{"1", "2"};
     Artist artist;
 
     public ViewPagerFragmentAdapter(@NonNull FragmentActivity fragmentActivity, Artist artist) {
@@ -32,6 +32,9 @@ public class ViewPagerFragmentAdapter extends FragmentStateAdapter {
                 break;
             case 1:
                 fragment = new TabLayOutBiographyFragment();
+                bundle = new Bundle();
+                bundle.putSerializable("artist", artist);
+                fragment.setArguments(bundle);//pasamos el bundle con el objeto artist al fragment
         }
         return fragment;
     }

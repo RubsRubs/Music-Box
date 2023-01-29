@@ -1,11 +1,14 @@
 package com.example.streamingaudioplayer;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ListView;
 
 import com.bumptech.glide.Glide;
@@ -17,7 +20,7 @@ public class ArtistActivity extends AppCompatActivity {
 
     ActivityArtistBinding binding;
     Artist artist;
-    private String[] titles = new String[]{"Álbumes", "Biografía"};
+    private String[] titles = new String[]{"Álbumes", "Información"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +30,17 @@ public class ArtistActivity extends AppCompatActivity {
         setContentView(view);
         getSupportActionBar().hide(); //escondemos la action bar
 
+        //cambiamos el color de la status bar
+        Window window = ArtistActivity.this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(ContextCompat.getColor(ArtistActivity.this, R.color.black));
+
         Bundle bundle = getIntent().getExtras();
         artist = (Artist) bundle.getSerializable("artist");
-        Glide.with(getApplicationContext()).load(artist.getArtistImageURL()).fitCenter().into(binding.artistImgViewID);
 
-        TabLayOutAlbumsFragment tabLayOutAlbumsFragment = new TabLayOutAlbumsFragment();
-        tabLayOutAlbumsFragment.setArguments(bundle); //pasamos el bundle recibido del recyclerview al ViewPagerFragmentAdapter primero y luego a su fragment correspondiente...
+        binding.txtVArtistActivityNameID.setText(artist.getName());
+        Glide.with(getApplicationContext()).load(artist.getArtistImageURL()).fitCenter().into(binding.artistImgViewID);
 
         viewPager();
     }

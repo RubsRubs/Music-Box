@@ -1,23 +1,31 @@
 package com.example.streamingaudioplayer;
 
-public class User {
+import java.io.Serializable;
 
-    private String email;
-    private String user;
+public class User implements Serializable {
+
+    public String user;
+    public String email;
+    public String profileImgURL;
 
     public User() {
     }
 
-    public User(String email, String user) {
-        this.email = email;
+    public User(String user, String email, String profileImgURL) {
         this.user = user;
+        this.email = email;
+        this.profileImgURL = profileImgURL;
+    }
+
+    public String getUser() {
+        return user;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public String getUser() {
-        return user;
+    public String getProfileImgURL() {
+        return this.profileImgURL;
     }
 }

@@ -1,17 +1,22 @@
 package com.example.streamingaudioplayer;
 
+import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.streamingaudioplayer.databinding.FragmentLibraryBinding;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,9 +29,8 @@ import java.util.ArrayList;
 public class LibraryFragment extends Fragment {
 
     FragmentLibraryBinding binding;
-    RecyclerView recyclerView;
-    FavouritesRecyclerAdapter favouritesRecyclerAdapter;
-    ArrayList<String> songKeys;
+
+    private String[] titles = new String[]{"Listas", "Favoritos", "Historial"};
 
     public LibraryFragment() {
         // Required empty public constructor
@@ -36,49 +40,16 @@ public class LibraryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentLibraryBinding.inflate(getLayoutInflater());
 
-        recyclerView = binding.libraryRecyclerViewId;
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager manager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
-        recyclerView.setLayoutManager(manager);
-        favouritesRecyclerAdapter = new FavouritesRecyclerAdapter(getContext());
-        recyclerView.setAdapter(favouritesRecyclerAdapter);
+        viewPager();
 
         return binding.getRoot();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        binding.layoutFavoritosID.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getUserFavouritesKeys();
-            }
-        });
-    }
-
-    public void getUserFavouritesKeys() {
-
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        String userId = auth.getCurrentUser().getUid();
-        DatabaseReference dbr = FirebaseDatabase.getInstance().getReference();
-        dbr.child("Users").child(userId).child("favourites").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                songKeys = new ArrayList<>();
-                for (DataSnapshot data : snapshot.getChildren()) {
-                    Favourite favourite = data.getValue(Favourite.class);
-                    songKeys.add(favourite.getSongId());
-                }
-                favouritesRecyclerAdapter.setItems(songKeys);
-                favouritesRecyclerAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+    public void viewPager() {
+        ViewPager2 viewPager2 = binding.libraryFragmentViewPagerID;
+        TabLayout tabLayout = binding.libraryFragmentTabLayOutID;
+        ViewPagerFramentAdapterLibrary viewPagerFramentAdapterLibrary = new ViewPagerFramentAdapterLibrary(this);
+        viewPager2.setAdapter(viewPagerFramentAdapterLibrary);
+        new TabLayoutMediator(tabLayout, viewPager2, ((tab, position) -> tab.setText(titles[position]))).attach();
     }
 }

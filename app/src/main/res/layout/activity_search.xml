@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     android:orientation="vertical"
     tools:context=".SearchActivity"
-    android:background="@color/black">
+    android:id="@+id/parent_relative_layout_ID">
 
     <SearchView
         android:id="@+id/searh_view_ID"
@@ -20,6 +21,22 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_recycler_view_ID"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/searh_view_ID" />
 
-</LinearLayout>
+    <ProgressBar
+        android:id="@+id/easter_egg_progress_circular_ID"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_below="@+id/searh_view_ID"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="300dp"
+        android:layout_marginEnd="180dp"
+        android:layout_marginBottom="250dp"
+        android:background="@color/black"
+        android:visibility="invisible" />
+
+</RelativeLayout>

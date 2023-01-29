@@ -1,10 +1,13 @@
 package com.example.streamingaudioplayer;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -31,15 +34,25 @@ public class AlbumActivity extends AppCompatActivity {
         setContentView(view);
         getSupportActionBar().hide(); //escondemos la action bar
 
+        //cambiamos el color de la status bar
+        Window window = AlbumActivity.this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(ContextCompat.getColor(AlbumActivity.this, R.color.black));
+
         Bundle bundle = getIntent().getExtras();
         artist = (Artist) bundle.getSerializable("artist");
         albumPosition = bundle.getInt("albumPosition");
 
+        loadLayOutData();
+        setUpListView();
+    }
+
+    public void loadLayOutData() {
         binding.albumActivityAlbumNameTextViewID.setText(artist.getAlbums().get(albumPosition).getAlbumTitle());
         binding.albumActivityArtistNameTextViewID.setText(artist.getName());
+        binding.albumActivityAlbumYearTextViewID.setText(artist.getAlbums().get(albumPosition).getYear());
         Glide.with(getApplicationContext()).load(artist.getAlbums().get(albumPosition).getImgURL()).into(binding.albumActivityImgViewID);
-
-        setUpListView();
     }
 
     private void setUpListView() {
@@ -65,9 +78,10 @@ public class AlbumActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int songPosition, long l) {
 
-                ArrayList<String> songKeysList = generateAlbumSongKeys();
+                ArrayList<String> songIdsList = generateAlbumSongKeys();
                 Bundle bundle = new Bundle();
-                bundle.putStringArrayList("songKeysList", songKeysList);
+                bundle.putInt("songIdPosition", songPosition);
+                bundle.putStringArrayList("songIdsList", songIdsList);
                 Intent intent = new Intent(getApplicationContext(), PlayerActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
@@ -75,11 +89,11 @@ public class AlbumActivity extends AppCompatActivity {
 
             private ArrayList<String> generateAlbumSongKeys() {
 
-                ArrayList<String> songKeysList = new ArrayList<>();
+                ArrayList<String> songIdsList = new ArrayList<>();
                 for (Song song : songs) {
-                    songKeysList.add(Double.toString(song.getIdNumber()));
+                    songIdsList.add(Double.toString(song.getSongId()));
                 }
-                return songKeysList;
+                return songIdsList;
             }
         });
     }

@@ -2,19 +2,31 @@ package com.example.streamingaudioplayer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.example.streamingaudioplayer.databinding.ActivityNavigationBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
-public class NavigationActivity extends AppCompatActivity {
+public class NavigationActivity extends AppCompatActivity implements PlayListCreationDialogue.PlayListAddDialogueListener, EditProfileNameDialogue.ChangeProfileNameDialogueListener {
 
     ActivityNavigationBinding binding;
     BottomNavigationView bottomNavigationView;
@@ -27,6 +39,12 @@ public class NavigationActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         getSupportActionBar().hide(); //escondemos la action bar;
+
+        //cambiamos el color de la status bar
+        Window window = NavigationActivity.this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(ContextCompat.getColor(NavigationActivity.this, R.color.black));
 
         bottomNavigationView = binding.bottomNavigationID;
 
@@ -73,6 +91,46 @@ public class NavigationActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
                 startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public void applyTexts(String title, String description, boolean publica) {
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        String userId = auth.getCurrentUser().getUid();
+        Playlist playlist = new Playlist(title, description, publica, userId);
+        addPlaylist(playlist);
+    }
+
+    public void addPlaylist(Playlist playlist) {
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        //String favouritesKey = databaseReference.child("Users").child("favourites").push().getKey();
+
+        databaseReference.child("Playlists").push().setValue(playlist).addOnCompleteListener(new OnCompleteListener<Void>() { //.child crea un nuevo nodo
+            @Override
+            public void onComplete(@NonNull Task<Void> task1) {
+                Toast.makeText(getApplicationContext(), "Playlist Creada", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void changeNameApplyText(String name) {
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        String id = firebaseAuth.getCurrentUser().getUid();
+
+        //String favouritesKey = databaseReference.child("Users").child("favourites").push().getKey();
+
+        databaseReference.child("Users").child(id).child("user").setValue(name).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Toast.makeText(NavigationActivity.this, "Nombre de usuario actualizado", Toast.LENGTH_SHORT).show();
             }
         });
     }

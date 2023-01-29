@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.streamingaudioplayer">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,13 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StreamingAudioPlayer">
         <activity
+            android:name=".PublicPlaylistDetailsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".PlayListDetailsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".AddToPlayListActivityListView"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
-            android:exported="true" />
-        <activity
-            android:name=".PruebaFirebaseQuery"
-            android:exported="true" />
-        <activity
-            android:name=".jSONCRUD"
             android:exported="true" />
         <activity
             android:name=".AlbumActivity"
